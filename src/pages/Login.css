@@ -1,0 +1,57 @@
+.kotak-daftar {
+    background-color: white;
+    border-radius: 10px;
+    padding: 24px;
+
+}
+
+.tombol-daftar {
+    width: 170px;
+    margin-top: 40px;
+    background-color: 
+    #0DD852;
+    border: none;
+}
+
+.pembungkus-daftar {
+    height: 80vh;
+    background-color: #F6F6F6;
+    
+}
+
+.dasar {
+    background-color: #F6F6F6;
+}
+
+.footer{
+    background-color: white;
+    height: 20vh;
+}
+
+
+@media (max-width: 575.98px) { 
+ 
+.logo {
+    max-width: 250px;
+}
+
+.tagline h1, h6 {
+    display: none;
+}
+ }
+
+ .footer a{
+    margin-left: 25px;
+    text-decoration: none;
+    color: 59709D;
+ }
+
+ .tagline {
+    color: rgba(85, 85, 85, 1);
+    
+ }
+
+ .bahasa p {
+    margin-left: 12px;
+    margin-right: 12px;
+ }

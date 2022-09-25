@@ -1,0 +1,29 @@
+.story {
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 20px;
+    text-align: center;
+
+}
+
+.story-akun {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.story-akun img {
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid rgba(89, 112, 157, 1);
+}
+
+.story-username {
+    margin-bottom: 0px;
+    margin-top: 5px;
+
+}
+
+.foto-profile img {
+    object-fit: cover;
+}

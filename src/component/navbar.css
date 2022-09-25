@@ -1,0 +1,42 @@
+.cari input {
+    width: 340px; 
+    border-radius: 30px; 
+    background-color:rgba(241, 241, 241, 1);
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+.cari  {
+    width: 380px; 
+    border-radius: 30px; 
+    height: 30px;
+    background-color:rgba(241, 241, 241, 1);
+    border-color: rgba(138, 136, 136, 1);
+    box-shadow: 0 2px 5px 0 #76767663 ;
+}
+
+.cari img {
+    margin-left: 10px;
+    margin-right: 5px;
+   
+}
+
+.bayangan {
+    box-shadow: 0 2px 5px 0 #76767663 ;
+}
+
+.profile-navbar {
+    height:2.5rem;
+    width: 2.5rem;
+    margin-bottom: 15px;
+    padding: 0px;
+    overflow: hidden;
+
+}
+
+.profile-navbar img {
+    height: 100%;
+    width: 100% ;
+    object-fit: cover;
+}
+

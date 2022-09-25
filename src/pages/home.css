@@ -1,0 +1,182 @@
+
+.story {
+    object-fit: scale-down;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.kotak-profil {
+    border-color: none;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    
+}
+
+.profile-home  {
+    height: 15vh;
+    width: 15vh;
+    margin-bottom: 15px;
+    padding: 0px;
+    overflow: hidden;
+
+}
+
+.profile-home img {
+    height: 100%;
+    width: 100% ;
+    object-fit: cover;
+}
+
+.kolom-post {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.kolom-post-logo {
+    background-color: rgba(89, 112, 157, 1);
+    border-radius: 8px 8px 0px 0px;
+    padding: 5px;
+    
+}
+
+.kolom-post-logo img {
+    height: 40px;
+}
+
+.kolom-post-caption {
+    margin-top: 5px;
+    height: 110px;
+    background: #D9D9D9;
+    margin-bottom: 5px;
+}
+
+.kolom-post-caption  textarea {
+    height: 100%;  
+    background: #D9D9D9;
+    outline: none;
+    width: 100%;
+    border: none;
+   
+}
+
+.lokasi-home {
+    background: #D9D9D9; 
+    border-radius: 0px 0px 8px 8px;
+}
+
+.lokasi-home input {
+    height: 100%;  
+    background: #D9D9D9;
+    outline: none;
+    border: none;
+}
+
+.posting-foto {
+    margin-top: 20px;
+}
+.tombol-post {
+    color: white;
+    border: none;
+    background: #59709D;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.kotak-kiri-home {
+    padding-left: 30px;
+}
+
+.kotak-kanan-home {
+    padding-right: 30px;
+}
+
+.kotak-informasi {
+    border-radius: 10px;
+    background-color: white;
+}
+
+.acara-gambar{
+    border-radius: 6px;
+    overflow: hidden;
+    width: 100%;
+}
+.acara-gambar img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.acara {
+    margin-top: 8px;
+    margin-right: 1.3px;
+    margin-left: 1.3px;
+}
+
+.tanggal-acara {
+    border-radius: 5px;
+}
+
+.tanggal-acara p {
+   margin: 0px;
+}
+
+.pembungkus-kontak {
+    border-radius: 10px;
+    background-color: rgba(245, 245, 245, 1);
+    padding: 10px;
+}
+
+.kotak-kontak {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.icon-kontak img    {
+    height: 28px;
+}
+
+.input-kontak{
+    margin-left: 10px;
+    border-radius: 30px; 
+    background-color:rgba(241, 241, 241, 1);
+    padding-bottom: 0px;
+    height: 30px;
+    padding-left: 10px;
+    
+
+}
+.input-kontak input{
+    width: 80%;
+    border-radius: 30px; 
+    background-color:rgba(241, 241, 241, 1);
+    border: none;
+    outline: none;
+    margin-bottom: 0px;
+}
+
+.nama-kontak {
+    font-size: 14px;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-bottom: 5px;
+    color: black;
+}
+
+.nama-online {
+    font-size: 11px;
+    padding-left: 5px;
+    margin-bottom: 0px;
+    color: slategray;
+}
+
+.online {
+    background-color: rgb(4, 241, 24);
+    height: 8px;
+    width: 8px;
+}
+/* div {
+    border: 1px solid black;
+} */

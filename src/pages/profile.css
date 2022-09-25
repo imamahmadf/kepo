@@ -1,0 +1,27 @@
+.container-profile {
+    padding-top: 80px;
+    background-color: rgba(241, 241, 241, 1);
+}
+.profile { 
+    background-color: white;
+   border-radius: 10px;
+}
+
+.foto {
+    overflow: hidden;
+    height: 10rem;
+    width: 10rem;
+    
+}
+
+.foto img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    
+}
+
+.profile p {
+    font-size: 20px;
+}
+
