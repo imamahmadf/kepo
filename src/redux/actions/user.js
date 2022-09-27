@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { API_URL } from "../../Constant/API";
 import Swal from "sweetalert2";
-import { Redirect } from "react-router-dom";
 
 export const registerUser = ({
   nama,
@@ -127,14 +126,12 @@ export const EditProfile = ({
       bio: editBio,
     })
       .then((result) => {
-        console.log(result.data);
         dispatch({
           type: "USER_EDIT",
           payload: result.data,
         });
 
         Swal.fire("Good job!", "You clicked the button!", "success");
-        <Redirect to="/profile" />;
       })
       .catch(() => {
         alert("terjadi kesalahan di server");

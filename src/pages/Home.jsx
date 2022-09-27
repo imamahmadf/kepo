@@ -101,7 +101,7 @@ class Home extends React.Component {
                 <img
                   className=""
                   alt=""
-                  src={this.props.userGlobal.fotoProfil}
+                  srcSet={this.props.userGlobal.fotoProfil}
                 />
               </div>
               <div>
@@ -110,9 +110,9 @@ class Home extends React.Component {
               </div>
               <Upload />
             </div>
-            <div className="kolom-post bayangan ">
+            {/* <div className="kolom-post bayangan ">
               <div className="kolom-post-logo">
-                <img src={KepoLogoPutih} alt="" />
+                <img srcSet={KepoLogoPutih} alt="" />
               </div>
               <div className="kolom-post-caption">
                 <textarea
@@ -139,7 +139,7 @@ class Home extends React.Component {
               </div>
               <div className="posting-foto d-flex justify-content-between">
                 <div>
-                  <img src={Foto} alt="" />
+                  <img srcSet={Foto} alt="" />
                   <input
                     onChange={this.inputHandler}
                     value={this.state.postFoto}
@@ -157,7 +157,7 @@ class Home extends React.Component {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="col-lg-8 " style={{ marginTop: "70px" }}>
@@ -188,7 +188,7 @@ class Home extends React.Component {
               <p className="mb-1">ACARA TERDEKAT</p>
               <div className="acara-gambar bg-dark">
                 <img
-                  src="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/05/28/2252965506.jpg"
+                  srcSet="https://assets.pikiran-rakyat.com/crop/0x0:0x0/x/photo/2022/05/28/2252965506.jpg"
                   alt=""
                 />
               </div>
@@ -201,7 +201,7 @@ class Home extends React.Component {
                   <p className="m-0">Indonesia</p>
                   <p className="m-0">Pantura</p>
                 </div>
-                <button type="button" class="btn btn-primary mt-3 mb-1">
+                <button type="button" className="btn btn-primary mt-3 mb-1">
                   Primary
                 </button>
               </div>
@@ -209,14 +209,14 @@ class Home extends React.Component {
             <div className="kotak-kontak bayangan p-3 my-3 ">
               <div className="d-flex ">
                 <div className="icon-kontak">
-                  <img src={Kontak} alt="" />
+                  <img srcSet={Kontak} alt="" />
                 </div>
                 <div className="ms-2">
                   <p>Kontak</p>
                 </div>
                 <div className="input-kontak">
                   <span>
-                    <img src={Cari} alt="" />
+                    <img srcSet={Cari} alt="" />
                   </span>
                   <input type="text" placeholder="cari.." />
                 </div>
@@ -224,7 +224,7 @@ class Home extends React.Component {
               <div className="d-flex pembungkus-kontak my-3 bayangan">
                 <div className="foto-profile rounded-circle mb-0">
                   <img
-                    src="https://images.unsplash.com/photo-1663765602888-21975b91e849?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
+                    srcSet="https://images.unsplash.com/photo-1663765602888-21975b91e849?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80"
                     alt=""
                   />
                 </div>
@@ -241,7 +241,7 @@ class Home extends React.Component {
               <div className="d-flex pembungkus-kontak my-3 bayangan">
                 <div className="foto-profile rounded-circle mb-0">
                   <img
-                    src="https://images.unsplash.com/photo-1659482634001-7e2571dec3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=708&q=80"
+                    srcSet="https://images.unsplash.com/photo-1659482634001-7e2571dec3e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=708&q=80"
                     alt=""
                   />
                 </div>
@@ -258,7 +258,7 @@ class Home extends React.Component {
               <div className="d-flex pembungkus-kontak my-3 bayangan">
                 <div className="foto-profile rounded-circle mb-0">
                   <img
-                    src="https://images.unsplash.com/photo-1657214059233-5626b35eb349?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMzR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                    srcSet="https://images.unsplash.com/photo-1657214059233-5626b35eb349?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMzR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
                     alt=""
                   />
                 </div>

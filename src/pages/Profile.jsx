@@ -43,8 +43,9 @@ class Profile extends React.Component {
   };
 
   editToggle = (editData) => {
+    console.log("edit toogle", editData);
     this.setState({
-      show: !this.state.show,
+      show: true,
       editNama: editData.nama,
       editNamaPengguna: editData.namaPengguna,
       editKataSandi: editData.kataSandi,
@@ -163,12 +164,14 @@ class Profile extends React.Component {
               >
                 Close
               </Button>
-              <Button
-                onClick={() => this.props.EditProfile(this.state)}
-                variant="primary"
-              >
-                Save Username & Password
-              </Button>
+              <div onClick={() => this.setState({ show: !this.state.show })}>
+                <Button
+                  onClick={() => this.props.EditProfile(this.state)}
+                  variant="primary"
+                >
+                  Save Username & Password
+                </Button>
+              </div>
             </Modal.Footer>
           </Modal>
         </Row>

@@ -21,7 +21,11 @@ export default (state = init_state, action) => {
     case "CHECK_STORAGE":
       return { ...state, storageIsChecked: true };
     case "USER_EDIT":
-      return { ...state, ...action.payload, storageIsChecked: true };
+      return {
+        ...state,
+        ...action.payload,
+        storageIsChecked: true,
+      };
     default:
       return state;
   }

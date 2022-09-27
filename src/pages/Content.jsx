@@ -10,7 +10,7 @@ import Ubah from "../img/icon/ubah.png";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
 import Kirim from "../img/icon/kirim.png";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Content extends Component {
   state = {
@@ -69,33 +69,19 @@ class Content extends Component {
     this.setState({ [name]: value });
   };
 
-  saveBtnHandler = (val) => {
+  saveBtnHandler = () => {
     Axios.patch(`${API_URL}/post/${this.state.postData.id}`, {
       lokasi: this.state.editLokasi,
       keterangan: this.state.editKeterangan,
     }).then(() => {
-      Swal.fire({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Saved!", "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
-      });
+      Swal.fire("Good job!", "You clicked the button!", "success");
       this.fetchPostData();
-      this.setState({ show: val });
+      this.setState({ show: !this.state.show });
     });
   };
 
   deleteBtnHandler = (deleteId) => {
     Axios.delete(`${API_URL}/post/${deleteId}`).then(() => {
-      <Redirect to="/profile" />;
       alert("berhasil hapus");
     });
   };
@@ -241,15 +227,18 @@ class Content extends Component {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <div>
-                  <Button
-                    onClick={() =>
-                      this.deleteBtnHandler(this.state.postData.id)
-                    }
-                    variant="danger"
-                  >
-                    Hapus
-                  </Button>
+                <div onClick={() => this.setState({ show: !this.state.show })}>
+                  {" "}
+                  <Link to="/profile">
+                    <Button
+                      onClick={() =>
+                        this.deleteBtnHandler(this.state.postData.id)
+                      }
+                      variant="danger"
+                    >
+                      Hapus
+                    </Button>
+                  </Link>
                 </div>
                 <div>
                   <Button
@@ -259,12 +248,10 @@ class Content extends Component {
                     Close
                   </Button>
                   <Button
-                    onClick={() =>
-                      this.saveBtnHandler({ show: !this.state.show })
-                    }
+                    onClick={() => this.saveBtnHandler()}
                     variant="primary"
                   >
-                    Save Username & Password
+                    Save
                   </Button>
                 </div>
               </Modal.Footer>

@@ -16,6 +16,7 @@ import Foto from "../img/icon/foto.png";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
 import Swal from "sweetalert2";
+import { Redirect } from "react-router-dom";
 
 class navbarScroll extends React.Component {
   state = {
@@ -38,16 +39,9 @@ class navbarScroll extends React.Component {
       namaPengguna: this.props.userGlobal.namaPengguna,
       fotoProfil: this.props.userGlobal.fotoProfil,
     })
-      .then(() => {
-        Swal.fire({
-          title: "Sweet!",
-          text: "Modal with a custom image.",
-          imageUrl: { foto: this.state.postFoto },
-          imageWidth: 400,
-          imageHeight: 200,
-          imageAlt: "Custom image",
-        });
-        this.fetchPost();
+      .then((result) => {
+        Swal.fire("Good job!", "You clicked the button!", "success");
+
         this.setState({
           postKeterangan: "",
           postFoto: "",
@@ -57,8 +51,8 @@ class navbarScroll extends React.Component {
           postUserId: 1,
         });
       })
-      .catch(() => {
-        alert("gagal addPsot");
+      .catch((err) => {
+        alert(err);
       });
   };
 
@@ -72,6 +66,7 @@ class navbarScroll extends React.Component {
   postToggle = (val) => {
     this.setState({ show: !this.state.show });
   };
+
   render() {
     return (
       <Navbar
@@ -93,7 +88,7 @@ class navbarScroll extends React.Component {
                   height="50"
                   className="d-inline-block align-top"
                   alt="React Bootstrap logo"
-                />{" "}
+                />
               </Link>
             </div>
             {this.props.userGlobal.nama ? (
@@ -226,12 +221,16 @@ class navbarScroll extends React.Component {
               >
                 Close
               </Button>
-              <Button
-                onClick={() => this.props.EditProfile(this.state)}
-                variant="primary"
-              >
-                Save Username & Password
-              </Button>
+              <div onClick={() => this.setState({ show: !this.state.show })}>
+                <Link to="/profile">
+                  <Button
+                    onClick={() => this.addPost(this.state)}
+                    variant="primary"
+                  >
+                    Save
+                  </Button>
+                </Link>
+              </div>
             </Modal.Footer>
           </Modal>
         </Row>
