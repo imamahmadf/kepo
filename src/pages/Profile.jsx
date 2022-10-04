@@ -12,6 +12,7 @@ class Profile extends React.Component {
   state = {
     post: [],
     show: false,
+    user: [],
 
     id: this.props.userGlobal.id,
     editNama: "",
@@ -21,14 +22,32 @@ class Profile extends React.Component {
     editBio: "",
   };
 
+  fetchProfile = () => {
+    console.log("fetchprofil", this.props.match.params.userId);
+    Axios.get(`${API_URL}/users`, {
+      params: {
+        namaPengguna: this.props.match.params.userId,
+      },
+    })
+      .then((result) => {
+        console.log("fetchprofil.then", result.data[0]);
+        this.setState({ user: result.data[0] });
+      })
+      .catch(() => {
+        alert("terjadi kesalahan di server1");
+      });
+  };
+
   fetchPost = () => {
+    console.log(this.state.user);
     Axios.get(`${API_URL}/post`, {
       params: {
-        namaPengguna: this.props.userGlobal.namaPengguna,
+        namaPengguna: this.state.user.namaPengguna,
       },
     })
       .then((result) => {
         console.log(result.data);
+
         this.setState({ post: result.data });
       })
       .catch(() => {
@@ -61,7 +80,12 @@ class Profile extends React.Component {
     this.setState({ [name]: value });
   };
 
+  componentDidUpdate() {
+    // this.fetchPost();
+  }
+
   componentDidMount() {
+    this.fetchProfile();
     this.fetchPost();
   }
 

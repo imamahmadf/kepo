@@ -6,9 +6,7 @@ import { API_URL } from "../Constant/API";
 import Story from "../component/story";
 import "./home.css";
 import { connect } from "react-redux";
-import KepoLogoPutih from "../img/logo/KepoLogoPutih.png";
-import Lokasi from "../img/icon/lokasi.png";
-import Foto from "../img/icon/foto.png";
+
 import Swal from "sweetalert2";
 import Upload from "./Upload";
 import Kontak from "../img/icon/kontak.png";
@@ -110,54 +108,7 @@ class Home extends React.Component {
               </div>
               <Upload />
             </div>
-            {/* <div className="kolom-post bayangan ">
-              <div className="kolom-post-logo">
-                <img srcSet={KepoLogoPutih} alt="" />
-              </div>
-              <div className="kolom-post-caption">
-                <textarea
-                  onChange={this.inputHandler}
-                  value={this.state.postKeterangan}
-                  name="postKeterangan"
-                  type="text"
-                  placeholder="Sebarkan aibmu..."
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div className="lokasi-home">
-                <span>
-                  <img src={Lokasi} alt="" srcset="" />
-                </span>
-                <input
-                  onChange={this.inputHandler}
-                  value={this.state.postLokasi}
-                  name="postLokasi"
-                  type="text"
-                  placeholder="Lokasi ..."
-                />
-              </div>
-              <div className="posting-foto d-flex justify-content-between">
-                <div>
-                  <img srcSet={Foto} alt="" />
-                  <input
-                    onChange={this.inputHandler}
-                    value={this.state.postFoto}
-                    name="postFoto"
-                    type="text"
-                    placeholder="Lokasi ..."
-                  />
-                </div>
-                <div>
-                  <button
-                    onClick={() => this.addPost(this.state)}
-                    className="tombol-post px-3 py-1"
-                  >
-                    Post
-                  </button>
-                </div>
-              </div>
-            </div> */}
+            <div>{/* pengaturan */}</div>
           </div>
         </div>
         <div className="col-lg-8 " style={{ marginTop: "70px" }}>

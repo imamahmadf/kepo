@@ -34,7 +34,7 @@ class App extends React.Component {
             <Route component={Login} path="/login" />
             <Route component={Register} path="/register" />
             <Route component={Content} path="/content/:postId" />
-            <Route component={Profile} path="/profile" />
+            <Route component={Profile} path="/profile/:userId" />
             <Route component={Home} path="/" />
           </Switch>
         </BrowserRouter>

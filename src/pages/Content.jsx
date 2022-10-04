@@ -34,6 +34,7 @@ class Content extends Component {
   // };
 
   fetchPostData = () => {
+    console.log(this.props.match.params.postId);
     Axios.get(`${API_URL}/post`, {
       params: {
         id: this.props.match.params.postId,

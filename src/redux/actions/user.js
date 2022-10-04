@@ -34,13 +34,16 @@ export const registerUser = ({
 
 export const loginUser = ({ namaPengguna, kataSandi }) => {
   return (dispatch) => {
-    Axios.get(`${API_URL}/users`, {
+    Axios.get(`http://localhost:3400/kepo/login`, {
       params: {
         namaPengguna,
       },
     })
       .then((result) => {
-        if (result.data.length) {
+        if (
+          namaPengguna === result.data[0].namaPengguna ||
+          namaPengguna === result.data[0].email
+        ) {
           if (kataSandi === result.data[0].kataSandi) {
             delete result.data[0].kataSandi;
 
@@ -63,12 +66,12 @@ export const loginUser = ({ namaPengguna, kataSandi }) => {
           // handle eror user name not found
           dispatch({
             type: "USER_ERROR",
-            payload: "User name tidak ditemukan",
+            payload: "User name atau email tidak ditemukan",
           });
         }
       })
       .catch((err) => {
-        alert(`terjadi kesalahan ke server`);
+        alert(`terjadi kesalahan ke server ketika login`);
       });
   };
 };

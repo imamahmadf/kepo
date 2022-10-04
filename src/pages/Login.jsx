@@ -13,6 +13,7 @@ class Login extends React.Component {
   };
 
   inputHandler = (event) => {
+    console.log(event.target.value);
     const value = event.target.value;
     const name = event.target.name;
 
@@ -20,7 +21,7 @@ class Login extends React.Component {
   };
 
   render() {
-    if (this.props.userGlobal.id) {
+    if (this.props.userGlobal.namaPengguna) {
       return <Redirect to="/" />;
     }
     return (

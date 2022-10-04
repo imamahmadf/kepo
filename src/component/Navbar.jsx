@@ -16,7 +16,6 @@ import Foto from "../img/icon/foto.png";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
 import Swal from "sweetalert2";
-import { Redirect } from "react-router-dom";
 
 class navbarScroll extends React.Component {
   state = {
@@ -202,14 +201,7 @@ class navbarScroll extends React.Component {
                         placeholder="Lokasi ..."
                       />
                     </div>
-                    <div>
-                      <button
-                        onClick={() => this.addPost(this.state)}
-                        className="tombol-post px-3 py-1"
-                      >
-                        Post
-                      </button>
-                    </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
