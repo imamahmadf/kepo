@@ -1,22 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import{Provider} from 'react-redux'
-import {createStore, applyMiddleware} from 'redux'
-import ReduxThunk from 'redux-thunk'
-import rootReducer from './redux/reducers'   // rootReducer merupakan gabungan reducer yang d buat di file index.js yang tersimpan di folder reducers
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import ReduxThunk from "redux-thunk";
+import rootReducer from "./redux/reducers"; // rootReducer merupakan gabungan reducer yang d buat di file index.js yang tersimpan di folder reducers
+import "@fortawesome/react-fontawesome/";
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    
-    <Provider store={store}> 
-      <App />
-    </Provider>
-    
-  
+  <Provider store={store}>
+    <App />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

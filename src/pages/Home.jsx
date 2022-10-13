@@ -2,30 +2,21 @@ import Post from "../component/Post";
 import React from "react";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
-
+import Foto from "../img/default-profile.jpg";
 import Story from "../component/story";
 import "./home.css";
 import { connect } from "react-redux";
-
-import Swal from "sweetalert2";
-import Upload from "./Upload";
 import Kontak from "../img/icon/kontak.png";
 import Cari from "../img/icon/cari.png";
+
 class Home extends React.Component {
   state = {
     post: [],
     users: [],
-
-    postKeterangan: "",
-    postFoto: "",
-    postLokasi: "",
-    postSuka: 0,
-    postKomentar: [],
-    postUserId: 1,
   };
 
   fetchPost = () => {
-    Axios.get(`${API_URL}/post`)
+    Axios.get(`${API_URL}/post/get`)
       .then((result) => {
         console.log(result);
         this.setState({ post: result.data });
@@ -35,46 +26,46 @@ class Home extends React.Component {
       });
   };
 
-  addPost = () => {
-    Axios.post(`${API_URL}/post`, {
-      foto: this.state.postFoto,
-      lokasi: this.state.postLokasi,
-      keterangan: this.state.postKeterangan,
-      suka: this.state.postSuka,
-      komentar: this.state.postKomentar,
-      namaPengguna: this.props.userGlobal.namaPengguna,
-      fotoProfil: this.props.userGlobal.fotoProfil,
-    })
-      .then(() => {
-        Swal.fire({
-          title: "Sweet!",
-          text: "Modal with a custom image.",
-          imageUrl: { foto: this.state.postFoto },
-          imageWidth: 400,
-          imageHeight: 200,
-          imageAlt: "Custom image",
-        });
-        this.fetchPost();
-        this.setState({
-          postKeterangan: "",
-          postFoto: "",
-          postLokasi: "",
-          postSuka: 0,
-          postKomentar: [],
-          postUserId: 1,
-        });
-      })
-      .catch(() => {
-        alert("gagal addPsot");
-      });
-  };
+  // addPost = () => {
+  //   Axios.post(`${API_URL}/post`, {
+  //     foto: this.state.postFoto,
+  //     lokasi: this.state.postLokasi,
+  //     keterangan: this.state.postKeterangan,
+  //     suka: this.state.postSuka,
+  //     komentar: this.state.postKomentar,
+  //     namaPengguna: this.props.userGlobal.namaPengguna,
+  //     fotoProfil: this.props.userGlobal.fotoProfil,
+  //   })
+  //     .then(() => {
+  //       Swal.fire({
+  //         title: "Sweet!",
+  //         text: "Modal with a custom image.",
+  //         imageUrl: { foto: this.state.postFoto },
+  //         imageWidth: 400,
+  //         imageHeight: 200,
+  //         imageAlt: "Custom image",
+  //       });
+  //       this.fetchPost();
+  //       this.setState({
+  //         postKeterangan: "",
+  //         postFoto: "",
+  //         postLokasi: "",
+  //         postSuka: 0,
+  //         postKomentar: [],
+  //         postUserId: 1,
+  //       });
+  //     })
+  //     .catch(() => {
+  //       alert("gagal addPsot");
+  //     });
+  // };
 
-  inputHandler = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
+  // inputHandler = (event) => {
+  //   const value = event.target.value;
+  //   const name = event.target.name;
 
-    this.setState({ [name]: value });
-  };
+  //   this.setState({ [name]: value });
+  // };
   renderPost = () => {
     return this.state.post.map((val) => {
       return <Post postData={val} />;
@@ -92,23 +83,61 @@ class Home extends React.Component {
         style={{ backgroundColor: "rgba(241, 241, 241, 1)" }}
       >
         <div className="col-lg-2 col-12 kotak-kiri-home ">
-          <div className="pt-3 sticky-lg-top">
+          <div className="py-3 sticky-lg-top ">
             <div style={{ height: "70px" }}></div>
             <div className="kotak-profil bayangan flex-column ">
               <div className="profile-home mx-auto rounded-circle mt-3">
                 <img
                   className=""
                   alt=""
-                  srcSet={this.props.userGlobal.fotoProfil}
+                  srcSet={
+                    this.props.userGlobal.fotoProfil == null
+                      ? Foto
+                      : this.props.userGlobal.fotoProfil
+                  }
                 />
               </div>
               <div>
                 <h3 className="text-center">{this.props.userGlobal.nama}</h3>
                 <p className="text-center">{this.props.userGlobal.bio}</p>
               </div>
-              <Upload />
             </div>
-            <div>{/* pengaturan */}</div>
+            {/* tombol home */}
+            <div className="row my-4 home-button bayangan p-2">
+              <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center ">
+                <button className="tombol bayangan me-2">
+                  <i class="fa-solid fa-user-group"></i>
+                </button>
+                <p>Grup</p>
+              </div>
+              <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center">
+                <button className="tombol bayangan me-2">
+                  <i class="fa-solid fa-gamepad"></i>
+                </button>
+                <p>Permainan</p>
+              </div>
+              <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center">
+                <button className="tombol bayangan me-2">
+                  <i class="fa-solid fa-star"></i>
+                </button>
+                <p>Suka</p>
+              </div>
+              <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center">
+                <button className="tombol bayangan me-2">
+                  <i class="fa-solid fa-gift"></i>
+                </button>
+                <p>Hadiah</p>
+              </div>
+              <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center">
+                <button className="tombol bayangan me-2">
+                  <i class="fa-solid fa-circle-info"></i>
+                </button>
+                <p>Info</p>
+              </div>
+              <div className="py-2 col-12 d-grid gap-2">
+                <button className="btn bayangan me-2">Lainnya...</button>
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-lg-8 " style={{ marginTop: "70px" }}>

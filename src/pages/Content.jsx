@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Like from "../img/icon/like.png";
 import Comment from "../img/icon/comment.png";
 import "./Content.css";
-
+import Foto from "../img/default-profile.jpg";
 import { Button, Modal, Row, FloatingLabel, Form } from "react-bootstrap";
 import { API_URL } from "../Constant/API";
 import Axios from "axios";
@@ -19,39 +19,52 @@ class Content extends Component {
     postKomen: [],
     editKeterangan: "",
     editLokasi: "",
+    suka: 0,
 
     isiKomentar: "",
   };
 
-  // addKomen = () => {
-  //   Axios.post(`${API_URL}/post/${this.state.postData.id}`, {})
-  //     .then(() => {
-  //       this.fetchPostKomen();
-  //     })
-  //     .catch(() => {
-  //       alert("eror nambah komen");
-  //     });
-  // };
+  addKomen = () => {
+    Axios.post(`${API_URL}/komentar/post/${this.state.postData.id_post}`, {
+      isi: this.state.isiKomentar,
+      id_user_yg_komen: this.props.userGlobal.id_user,
+      id_komen_ini_ada_di_post_apa: parseInt(this.props.match.params.postId),
+    })
+      .then(() => {
+        Swal.fire("Good job!", "You clicked the button!", "success");
+        this.fetchPostKomen();
+        this.setState({ isiKomentar: "" });
+      })
+      .catch(() => {
+        alert("eror nambah komen");
+      });
+  };
 
   fetchPostData = () => {
     console.log(this.props.match.params.postId);
-    Axios.get(`${API_URL}/post`, {
-      params: {
-        id: this.props.match.params.postId,
-      },
-    }).then((result) => {
-      this.setState({ postData: result.data[0] });
-    });
+    Axios.get(`${API_URL}/post/${this.props.match.params.postId}`).then(
+      (result) => {
+        console.log(result.data[0]);
+        this.setState({ postData: result.data[0] });
+      }
+    );
   };
 
   fetchPostKomen = () => {
-    Axios.get(`${API_URL}/post`, {
-      params: {
-        id: this.props.match.params.postId,
-      },
-    }).then((result) => {
-      this.setState({ postKomen: result.data[0].komentar });
-    });
+    Axios.get(`${API_URL}/komentar/${this.props.match.params.postId}`).then(
+      (result) => {
+        console.log(result.data);
+        this.setState({ postKomen: result.data });
+      }
+    );
+  };
+
+  fetchSuka = () => {
+    Axios.get(`${API_URL}/suka/get/${this.props.match.params.postId}`).then(
+      (result) => {
+        this.setState({ suka: result.data.length });
+      }
+    );
   };
 
   editToggle = (editData) => {
@@ -71,7 +84,7 @@ class Content extends Component {
   };
 
   saveBtnHandler = () => {
-    Axios.patch(`${API_URL}/post/${this.state.postData.id}`, {
+    Axios.patch(`${API_URL}/post/edit/${this.state.postData.id_post}`, {
       lokasi: this.state.editLokasi,
       keterangan: this.state.editKeterangan,
     }).then(() => {
@@ -81,10 +94,12 @@ class Content extends Component {
     });
   };
 
-  deleteBtnHandler = (deleteId) => {
-    Axios.delete(`${API_URL}/post/${deleteId}`).then(() => {
-      alert("berhasil hapus");
-    });
+  deleteBtnHandler = () => {
+    Axios.delete(`${API_URL}/post/delete/${this.state.postData.id_post}`).then(
+      () => {
+        alert("berhasil hapus");
+      }
+    );
   };
 
   renderKomen = () => {
@@ -96,6 +111,7 @@ class Content extends Component {
   componentDidMount() {
     this.fetchPostData();
     this.fetchPostKomen();
+    this.fetchSuka();
   }
 
   render() {
@@ -111,7 +127,7 @@ class Content extends Component {
                 <img
                   className="foto-content"
                   alt=""
-                  src={this.state.postData.foto}
+                  src={API_URL + this.state.postData.foto}
                 />
               </div>
             </div>
@@ -121,7 +137,11 @@ class Content extends Component {
                   <div className="d-flex">
                     <div className="profile-navbar rounded-circle my-aut">
                       <img
-                        src={this.state.postData.fotoProfil}
+                        src={
+                          this.state.postData.fotoProfil == null
+                            ? Foto
+                            : this.state.postData.fotoProfil
+                        }
                         alt=""
                         srcset=""
                       />
@@ -157,31 +177,33 @@ class Content extends Component {
                       type="text"
                       placeholder="Komentar ..."
                       onChange={this.inputHandler}
+                      value={this.state.isiKomentar}
                     />
                     <img
                       src={Kirim}
-                      // onClick={this.addKomen()}
+                      onClick={this.addKomen}
                       alt=""
                       className="icon-kirim "
                     />
                   </div>
                   <img src={Like} alt="" className="icon" />
-                  <p>{this.state.postData.suka}</p>
+                  <p>{this.state.suka}</p>
                   <img src={Comment} alt="" className="icon" />
-                  <p></p>
+                  <p>{this.state.postKomen.length}</p>
                 </div>
-                <div className="d-grid gap-2 mx-3 mb-3">
-                  <Button
-                    onClick={() => this.handleShow()}
-                    style={{
-                      backgroundColor: "rgba(89, 112, 157, 1)",
-                      borderColor: "rgba(89, 112, 157, 1)",
-                    }}
-                    size="lg"
-                  >
-                    Kepo
-                  </Button>
-                </div>
+                <Link to={`/profile/${this.state.postData.namaPengguna}`}>
+                  <div className="d-grid gap-2 mx-3 mb-3">
+                    <Button
+                      style={{
+                        backgroundColor: "rgba(89, 112, 157, 1)",
+                        borderColor: "rgba(89, 112, 157, 1)",
+                      }}
+                      size="lg"
+                    >
+                      Kepo
+                    </Button>{" "}
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -232,9 +254,7 @@ class Content extends Component {
                   {" "}
                   <Link to="/profile">
                     <Button
-                      onClick={() =>
-                        this.deleteBtnHandler(this.state.postData.id)
-                      }
+                      onClick={() => this.deleteBtnHandler()}
                       variant="danger"
                     >
                       Hapus
@@ -276,14 +296,23 @@ class Komentar extends React.Component {
       <div className=" mx-3 my-0">
         <div className="komentar-content d-flex justify-content-start my-1 mx-0">
           <div className="foto-profile rounded-circle my-0">
-            <img src={this.props.komentarData.fotoProfil} alt="" srcset="" />
+            <img
+              src={
+                this.props.komentarData.fotoProfil == null
+                  ? Foto
+                  : this.props.komentarData.fotoProfil
+              }
+              alt=""
+              srcset=""
+            />
           </div>
           <div className="ms-4">
-            <h6 className="username">{this.props.komentarData.namaPengguna}</h6>
+            <h6 className="username my-0">
+              {this.props.komentarData.namaPengguna}
+            </h6>
+            <p>{this.props.komentarData.isi}</p>
           </div>
         </div>
-
-        <p>{this.props.komentarData.isiKomentar}</p>
       </div>
     );
   }

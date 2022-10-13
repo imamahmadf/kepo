@@ -45,10 +45,14 @@
 
 .gambar {
     object-fit: cover;
-    height: 250px;
+    height: 300px;
     overflow: hidden;
+    transition: all .1s ease-in-out;
     
 }
+
+
+
 
 .keterangan {
     margin-left: 13px;  
@@ -90,4 +94,21 @@ input {
     height: 20px;
 }
 
+
+.kirim-komentar {
+    background-color: white;
+    border-radius: 50%;
+    height: 20px;
+    margin: 3px;
+    width: 20px;
+    
+}
+
+.kirim-komentar i {
+    font-size: 13px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    
+}
 

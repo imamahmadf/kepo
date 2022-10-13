@@ -1,4 +1,6 @@
-
+p {
+    color: rgba(85, 85, 85, 1);
+}
 .story {
     object-fit: scale-down;
     overflow-x: hidden;
@@ -177,6 +179,17 @@
     height: 8px;
     width: 8px;
 }
-/* div {
-    border: 1px solid black;
-} */
+
+.home-button {
+    background-color: white;border-radius: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+}
+
+.home-button p {
+    font-weight: 700;
+    margin: 0px;
+
+}
+

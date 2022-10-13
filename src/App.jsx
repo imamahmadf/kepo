@@ -19,6 +19,7 @@ class App extends React.Component {
     if (userLocalStorage) {
       const userData = JSON.parse(userLocalStorage);
       // console.log(userData)
+
       this.props.UserKeepLogin(userData);
     } else {
       this.props.checkStorage();
@@ -28,16 +29,18 @@ class App extends React.Component {
   render() {
     if (this.props.userGlobal.storageIsChecked) {
       return (
-        <BrowserRouter>
-          <Navbar />
-          <Switch>
-            <Route component={Login} path="/login" />
-            <Route component={Register} path="/register" />
-            <Route component={Content} path="/content/:postId" />
-            <Route component={Profile} path="/profile/:userId" />
-            <Route component={Home} path="/" />
-          </Switch>
-        </BrowserRouter>
+        <div className="dark-mode">
+          <BrowserRouter>
+            <Navbar />
+            <Switch>
+              <Route component={Login} path="/login" />
+              <Route component={Register} path="/register" />
+              <Route component={Content} path="/content/:postId" />
+              <Route component={Profile} path="/profile/:username" />
+              <Route component={Home} path="/" />
+            </Switch>
+          </BrowserRouter>
+        </div>
       );
     }
     return <div>Loading......</div>;

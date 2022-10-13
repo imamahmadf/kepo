@@ -7,6 +7,7 @@ import Pengaturan from "../img/icon/pengaturan.png";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
 import { EditProfile } from "../redux/actions/user";
+import Foto from "../img/default-profile.jpg";
 
 class Profile extends React.Component {
   state = {
@@ -23,10 +24,10 @@ class Profile extends React.Component {
   };
 
   fetchProfile = () => {
-    console.log("fetchprofil", this.props.match.params.userId);
-    Axios.get(`${API_URL}/users`, {
+    console.log("fetchprofil", this.props.match.params.username);
+    Axios.get(`${API_URL}/kepo/login`, {
       params: {
-        namaPengguna: this.props.match.params.userId,
+        namaPengguna: this.props.match.params.username,
       },
     })
       .then((result) => {
@@ -39,14 +40,10 @@ class Profile extends React.Component {
   };
 
   fetchPost = () => {
-    console.log(this.state.user);
-    Axios.get(`${API_URL}/post`, {
-      params: {
-        namaPengguna: this.state.user.namaPengguna,
-      },
-    })
+    console.log(this.props.match.params.userId);
+    Axios.get(`${API_URL}/post/profile/${this.props.match.params.username}`, {})
       .then((result) => {
-        console.log(result.data);
+        console.log("tes proffile" + result.data);
 
         this.setState({ post: result.data });
       })
@@ -95,19 +92,31 @@ class Profile extends React.Component {
         <div className="container">
           <div className="row profile p-3 bayangan">
             <div className="col-md-2 col-sm-12 foto  rounded-circle">
-              <img src={this.props.userGlobal.fotoProfil} alt="" srcset="" />
+              <img
+                src={
+                  this.props.userGlobal.fotoProfil == null
+                    ? Foto
+                    : this.props.userGlobal.fotoProfil
+                }
+                alt=""
+                srcset=""
+              />
             </div>
             <div className="col-md-10 col-sm-12">
-              <h1>{this.props.userGlobal.nama}</h1>
-              <p>{this.props.userGlobal.bio}</p>
+              <h1>{this.state.user.namaPengguna}</h1>
+              <p>{this.state.user.bio}</p>
               <span>
-                <img
-                  onClick={() => this.editToggle(this.props.userGlobal)}
-                  src={Pengaturan}
-                  alt=""
-                  srcset=""
-                  style={{ width: "25px" }}
-                />
+                {this.props.userGlobal.id_user === this.state.user.id_user ? (
+                  <>
+                    <img
+                      onClick={() => this.editToggle(this.state.user)}
+                      src={Pengaturan}
+                      alt=""
+                      srcset=""
+                      style={{ width: "25px" }}
+                    />
+                  </>
+                ) : null}
               </span>
             </div>
           </div>
@@ -154,7 +163,7 @@ class Profile extends React.Component {
                     value={this.state.editNamaPengguna}
                   />
                 </FloatingLabel>
-                <FloatingLabel
+                {/* <FloatingLabel
                   controlId="floatingTextarea2"
                   label="Foto Profil"
                 >
@@ -167,7 +176,7 @@ class Profile extends React.Component {
                     name="editFotoProfil"
                     value={this.state.editFotoProfil}
                   />
-                </FloatingLabel>
+                </FloatingLabel> */}
                 <FloatingLabel controlId="floatingTextarea2" label="Bio">
                   <Form.Control
                     as="textarea"

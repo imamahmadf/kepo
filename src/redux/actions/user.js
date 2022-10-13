@@ -34,7 +34,7 @@ export const registerUser = ({
 
 export const loginUser = ({ namaPengguna, kataSandi }) => {
   return (dispatch) => {
-    Axios.get(`http://localhost:3400/kepo/login`, {
+    Axios.get(`${API_URL}/kepo/login`, {
       params: {
         namaPengguna,
       },
@@ -85,9 +85,9 @@ export const LogoutUser = () => {
 
 export const UserKeepLogin = (userData) => {
   return (dispatch) => {
-    Axios.get(`${API_URL}/users`, {
+    Axios.get(`${API_URL}/kepo/login`, {
       params: {
-        id: userData.id,
+        id_user: userData.id,
       },
     })
       .then((result) => {

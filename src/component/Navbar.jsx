@@ -1,18 +1,14 @@
 import { Container, Navbar, Modal, Button, Row } from "react-bootstrap";
 import Logo from "../img/kepologo.png";
-import Keluar from "../img/icon/keluar.png";
-import Beranda from "../img/icon/beranda.png";
 import { connect } from "react-redux";
 import React from "react";
 import { Link } from "react-router-dom";
 import { LogoutUser } from "../redux/actions/user";
 import "./navbar.css";
 import Cari from "../img/icon/cari.png";
-import Notifikasi from "../img/icon/notifikasi.png";
-import Post from "../img/icon/post.png";
 import KepoLogoPutih from "../img/logo/KepoLogoPutih.png";
 import Lokasi from "../img/icon/lokasi.png";
-import Foto from "../img/icon/foto.png";
+import Foto from "../img/default-profile.jpg";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
 import Swal from "sweetalert2";
@@ -21,39 +17,71 @@ class navbarScroll extends React.Component {
   state = {
     show: false,
     postKeterangan: "",
-    postFoto: "",
+
     postLokasi: "",
     postSuka: 0,
     postKomentar: [],
     postUserId: 1,
+    id_user_yg_post: 0,
+    addFileName: "",
+    addFile: "",
   };
 
   addPost = () => {
-    Axios.post(`${API_URL}/post`, {
-      foto: this.state.postFoto,
-      lokasi: this.state.postLokasi,
+    let formData = new FormData();
+
+    let obj = {
       keterangan: this.state.postKeterangan,
-      suka: this.state.postSuka,
-      komentar: this.state.postKomentar,
-      namaPengguna: this.props.userGlobal.namaPengguna,
-      fotoProfil: this.props.userGlobal.fotoProfil,
-    })
+      lokasi: this.state.postLokasi,
+      id_user_yg_post: this.props.userGlobal.id_user,
+    };
+    console.log(this.props.userGlobal.id_user);
+
+    formData.append("data", JSON.stringify(obj));
+    formData.append("file", this.state.addFile);
+
+    Axios.post(`${API_URL}/post/upload`, formData)
       .then((result) => {
         Swal.fire("Good job!", "You clicked the button!", "success");
 
         this.setState({
           postKeterangan: "",
-          postFoto: "",
           postLokasi: "",
-          postSuka: 0,
-          postKomentar: [],
-          postUserId: 1,
         });
       })
       .catch((err) => {
         alert(err);
       });
   };
+
+  // addPost = () => {
+  //   Axios.post(`http://localhost:2000/album/upload`, {
+  //     foto: this.state.postFoto,
+  //     keterangan: this.state.postKeterangan,
+  //     lokasi: this.state.postLokasi,
+  //     id_user_yg_post: this.props.userGlobal.id,
+
+  //     // suka: this.state.postSuka,
+  //     // komentar: this.state.postKomentar,
+  //     // namaPengguna: this.props.userGlobal.namaPengguna,
+  //     // fotoProfil: this.props.userGlobal.fotoProfil,
+  //   })
+  //     .then((result) => {
+  //       Swal.fire("Good job!", "You clicked the button!", "success");
+
+  //       this.setState({
+  //         postKeterangan: "",
+  //         postFoto: "",
+  //         postLokasi: "",
+  //         postSuka: 0,
+  //         postKomentar: [],
+  //         postUserId: 1,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //     });
+  // };
 
   inputHandler = (event) => {
     const value = event.target.value;
@@ -62,7 +90,18 @@ class navbarScroll extends React.Component {
     this.setState({ [name]: value });
   };
 
-  postToggle = (val) => {
+  onBtnAddFile = (event) => {
+    if (event.target.files[0]) {
+      this.setState({
+        addFileName: event.target.files[0].name,
+        addFile: event.target.files[0],
+      });
+      let preview = document.getElementById("foto-upload");
+      preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+  };
+
+  postToggle = () => {
     this.setState({ show: !this.state.show });
   };
 
@@ -73,20 +112,29 @@ class navbarScroll extends React.Component {
         expand="lg"
         className="bayangan fixed-top"
       >
-        <Container>
+        <Container fluid className="px-5">
           <Navbar.Brand href="#home"></Navbar.Brand>
+          <div className="">
+            <img
+              src={Logo}
+              height="45"
+              className="logo-kepo-kecil "
+              alt="React Bootstrap"
+            />
+          </div>
           <Navbar.Toggle aria-controls="navbarScroll" />
+
           <Navbar.Collapse
             id="navbarScroll"
-            className="justify-content-between"
+            className="justify-content-between navbar-kepo"
           >
             <div>
               <Link to="/">
                 <img
                   src={Logo}
-                  height="50"
-                  className="d-inline-block align-top"
-                  alt="React Bootstrap logo"
+                  height="45"
+                  className=" align-top logo-kepo"
+                  alt="React Bootstrap"
                 />
               </Link>
             </div>
@@ -98,36 +146,27 @@ class navbarScroll extends React.Component {
                   </span>
                   <input type="text" placeholder="Cari" />
                 </div>
-                <div className="d-flex flex-row align-items-center ">
+                <div className="d-flex flex-row align-items-center my-3 my-md-0">
                   <div>
                     <Link to="/">
-                      <img
-                        src={Beranda}
-                        height="20"
-                        className="px-4"
-                        alt="foto profile"
-                      />
+                      <button className="tombol mx-3 ">
+                        <i class="fa-solid fa-house"></i>
+                      </button>
                     </Link>
-                    <img
+                    <button
                       onClick={() => this.postToggle(this.state.show)}
-                      src={Post}
-                      height="20"
-                      className="px-4"
-                      alt="foto profile"
-                    />
-                    <img
-                      src={Notifikasi}
-                      height="20"
-                      className="px-4"
-                      alt="foto profile"
-                    />
+                      className="tombol mx-3"
+                    >
+                      <i class="fa-solid fa-circle-plus"></i>
+                    </button>
+                    <button className="tombol mx-3">
+                      <i class="fa-solid fa-bell"></i>
+                    </button>
+
                     <Link onClick={this.props.LogoutUser} to="/login">
-                      <img
-                        src={Keluar}
-                        height="20"
-                        className="px-4"
-                        alt="foto profile"
-                      />
+                      <button className="tombol mx-3">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                      </button>
                     </Link>
                   </div>
                   <div>
@@ -136,9 +175,19 @@ class navbarScroll extends React.Component {
                     </h6>
                   </div>
                   <div className="profile-navbar rounded-circle my-auto">
-                    <Link to="/profile">
+                    <Link
+                      to={
+                        this.props.userGlobal.namaPengguna
+                          ? `/profile/${this.props.userGlobal.namaPengguna}`
+                          : `/`
+                      }
+                    >
                       <img
-                        src={this.props.userGlobal.fotoProfil}
+                        src={
+                          this.props.userGlobal.fotoProfil == null
+                            ? Foto
+                            : this.props.userGlobal.fotoProfil
+                        }
                         alt="foto profile"
                       />
                     </Link>
@@ -191,7 +240,7 @@ class navbarScroll extends React.Component {
                     />
                   </div>
                   <div className="posting-foto d-flex justify-content-between">
-                    <div>
+                    {/* <div>
                       <img src={Foto} alt="" />
                       <input
                         onChange={this.inputHandler}
@@ -199,6 +248,22 @@ class navbarScroll extends React.Component {
                         name="postFoto"
                         type="text"
                         placeholder="Lokasi ..."
+                      />
+                    </div> */}
+                    <div className="border form-grup ">
+                      <img
+                        id="foto-upload"
+                        src=""
+                        alt=""
+                        widht="100%"
+                        height="300x"
+                      />
+                      <label htmlFor="img">image</label>
+                      <input
+                        type="file"
+                        className="form-control"
+                        name="image"
+                        onChange={this.onBtnAddFile}
                       />
                     </div>
                     <div></div>
@@ -214,7 +279,13 @@ class navbarScroll extends React.Component {
                 Close
               </Button>
               <div onClick={() => this.setState({ show: !this.state.show })}>
-                <Link to="/profile">
+                <Link
+                  to={
+                    this.props.userGlobal.namaPengguna
+                      ? `/profile/${this.props.userGlobal.namaPengguna}`
+                      : `/login`
+                  }
+                >
                   <Button
                     onClick={() => this.addPost(this.state)}
                     variant="primary"

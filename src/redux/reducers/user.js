@@ -2,7 +2,7 @@ const init_state = {
   nama: "",
   namaPengguna: "",
   email: "",
-  id: 0,
+  id_user: 0,
   fotoProfil: "",
   bio: "",
   errMsg: "",

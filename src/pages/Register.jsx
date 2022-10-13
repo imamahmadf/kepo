@@ -12,8 +12,7 @@ class Register extends React.Component {
     nama: "",
     namaPengguna: "",
     email: "",
-    fotoProfil:
-      "https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg",
+    fotoProfil: null,
     kataSandi: "",
     bio: "Tambahkan Biografimu",
   };
