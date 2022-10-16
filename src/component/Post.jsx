@@ -54,14 +54,7 @@ class BasicExample extends React.Component {
             <div className="d-flex flex-row">
               <div className="foto-profile rounded-circle">
                 <Link to={`/profile/${this.props.postData.namaPengguna}`}>
-                  <img
-                    src={
-                      this.props.postData.fotoProfil == null
-                        ? Foto
-                        : this.props.postData.fotoProfil
-                    }
-                    alt=""
-                  />{" "}
+                  <img src={API_URL + this.props.postData.fotoProfil} alt="" />{" "}
                 </Link>
               </div>
               <div className="keterangan">

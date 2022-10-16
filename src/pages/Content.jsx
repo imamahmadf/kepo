@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import Swal from "sweetalert2";
 import Kirim from "../img/icon/kirim.png";
 import { Link } from "react-router-dom";
+import qs from "qs";
 
 class Content extends Component {
   state = {
@@ -95,11 +96,20 @@ class Content extends Component {
   };
 
   deleteBtnHandler = () => {
-    Axios.delete(`${API_URL}/post/delete/${this.state.postData.id_post}`).then(
-      () => {
+    alert(this.state.postData.foto);
+    let body = {
+      old_img: this.state.postData.foto,
+    };
+    Axios.delete(
+      `${API_URL}/post/delete/${this.state.postData.id_post}`,
+      qs.stringify(body)
+    )
+      .then(() => {
         alert("berhasil hapus");
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   renderKomen = () => {
@@ -252,14 +262,14 @@ class Content extends Component {
               <Modal.Footer>
                 <div onClick={() => this.setState({ show: !this.state.show })}>
                   {" "}
-                  <Link to="/profile">
-                    <Button
-                      onClick={() => this.deleteBtnHandler()}
-                      variant="danger"
-                    >
-                      Hapus
-                    </Button>
-                  </Link>
+                  {/* <Link to="/profile"> */}
+                  <Button
+                    onClick={() => this.deleteBtnHandler()}
+                    variant="danger"
+                  >
+                    Hapus
+                  </Button>
+                  {/* </Link> */}
                 </div>
                 <div>
                   <Button

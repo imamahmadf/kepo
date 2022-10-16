@@ -11,7 +11,7 @@ export const registerUser = ({
   bio,
 }) => {
   return (dispatch) => {
-    Axios.post(`${API_URL}/users`, {
+    Axios.post(`${API_URL}/kepo/register`, {
       nama,
       namaPengguna,
       email,
@@ -119,15 +119,20 @@ export const EditProfile = ({
   editBio,
   editFotoProfil,
   id,
+  fotolama,
 }) => {
   return (dispatch) => {
-    Axios.patch(`${API_URL}/users/${id}`, {
-      nama: editNama,
-      namaPengguna: editNamaPengguna,
-      kataSandi: editKataSandi,
-      fotoProfil: editFotoProfil,
-      bio: editBio,
-    })
+    const formData = new FormData();
+
+    formData.append("nama", editNama);
+    formData.append("namaPengguna", editNamaPengguna);
+    formData.append("kataSandi", editKataSandi);
+    formData.append("bio", editBio);
+    formData.append("id", id);
+    formData.append("image", fotolama);
+    formData.append("image", editFotoProfil);
+    console.log(fotolama);
+    Axios.patch(`${API_URL}/kepo/edit`, formData)
       .then((result) => {
         dispatch({
           type: "USER_EDIT",
@@ -136,8 +141,9 @@ export const EditProfile = ({
 
         Swal.fire("Good job!", "You clicked the button!", "success");
       })
-      .catch(() => {
+      .catch((err) => {
         alert("terjadi kesalahan di server");
+        console.log(err);
       });
   };
 };

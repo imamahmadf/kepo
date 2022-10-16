@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import Content from "./pages/Content";
 import Profile from "./pages/Profile";
 import Navbar from "./component/Navbar";
-
+import Auth from "./pages/Auth";
 import { connect } from "react-redux";
 import { UserKeepLogin, checkStorage } from "./redux/actions/user";
 
@@ -33,6 +33,7 @@ class App extends React.Component {
           <BrowserRouter>
             <Navbar />
             <Switch>
+              <Route component={Auth} path="authentication/:token" />
               <Route component={Login} path="/login" />
               <Route component={Register} path="/register" />
               <Route component={Content} path="/content/:postId" />

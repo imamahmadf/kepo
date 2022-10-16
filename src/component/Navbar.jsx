@@ -28,17 +28,12 @@ class navbarScroll extends React.Component {
   };
 
   addPost = () => {
-    let formData = new FormData();
+    const formData = new FormData();
 
-    let obj = {
-      keterangan: this.state.postKeterangan,
-      lokasi: this.state.postLokasi,
-      id_user_yg_post: this.props.userGlobal.id_user,
-    };
-    console.log(this.props.userGlobal.id_user);
-
-    formData.append("data", JSON.stringify(obj));
-    formData.append("file", this.state.addFile);
+    formData.append("keterangan", this.state.postKeterangan);
+    formData.append("lokasi", this.state.postLokasi);
+    formData.append("id_user_yg_post", this.props.userGlobal.id_user);
+    formData.append("image", this.state.addFile);
 
     Axios.post(`${API_URL}/post/upload`, formData)
       .then((result) => {
@@ -53,6 +48,33 @@ class navbarScroll extends React.Component {
         alert(err);
       });
   };
+
+  // addPost = () => {
+  //   let formData = new FormData();
+
+  //   let obj = {
+  //     keterangan: this.state.postKeterangan,
+  //     lokasi: this.state.postLokasi,
+  //     id_user_yg_post: this.props.userGlobal.id_user,
+  //   };
+  //   console.log(this.props.userGlobal.id_user);
+
+  //   formData.append("data", JSON.stringify(obj));
+  //   formData.append("file", this.state.addFile);
+
+  //   Axios.post(`${API_URL}/post/upload`, formData)
+  //     .then((result) => {
+  //       Swal.fire("Good job!", "You clicked the button!", "success");
+
+  //       this.setState({
+  //         postKeterangan: "",
+  //         postLokasi: "",
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //     });
+  // };
 
   // addPost = () => {
   //   Axios.post(`http://localhost:2000/album/upload`, {
@@ -93,7 +115,6 @@ class navbarScroll extends React.Component {
   onBtnAddFile = (event) => {
     if (event.target.files[0]) {
       this.setState({
-        addFileName: event.target.files[0].name,
         addFile: event.target.files[0],
       });
       let preview = document.getElementById("foto-upload");
@@ -263,6 +284,7 @@ class navbarScroll extends React.Component {
                         type="file"
                         className="form-control"
                         name="image"
+                        // onChange={this.inputHandler}
                         onChange={this.onBtnAddFile}
                       />
                     </div>

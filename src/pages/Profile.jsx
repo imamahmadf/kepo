@@ -21,6 +21,7 @@ class Profile extends React.Component {
     editKataSandi: "",
     editFotoProfil: "",
     editBio: "",
+    fotolama: this.props.userGlobal.fotoProfil,
   };
 
   fetchProfile = () => {
@@ -77,6 +78,16 @@ class Profile extends React.Component {
     this.setState({ [name]: value });
   };
 
+  onBtnAddFile = (event) => {
+    if (event.target.files[0]) {
+      this.setState({
+        editFotoProfil: event.target.files[0],
+      });
+      let preview = document.getElementById("foto-upload");
+      preview.src = URL.createObjectURL(event.target.files[0]);
+    }
+  };
+
   componentDidUpdate() {
     // this.fetchPost();
   }
@@ -120,7 +131,7 @@ class Profile extends React.Component {
               </span>
             </div>
           </div>
-          <div className="row justify-content-center py-5">
+          <div className="row justify-content-center pt-2 pb-5">
             {this.renderPost()}
           </div>
         </div>
@@ -177,6 +188,23 @@ class Profile extends React.Component {
                     value={this.state.editFotoProfil}
                   />
                 </FloatingLabel> */}
+                <div className="border form-grup ">
+                  <img
+                    id="foto-upload"
+                    src=""
+                    alt=""
+                    widht="100%"
+                    height="300x"
+                  />
+                  <label htmlFor="img">image</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    name="image"
+                    // onChange={this.inputHandler}
+                    onChange={this.onBtnAddFile}
+                  />
+                </div>
                 <FloatingLabel controlId="floatingTextarea2" label="Bio">
                   <Form.Control
                     as="textarea"
