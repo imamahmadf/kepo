@@ -15,13 +15,13 @@ class Profile extends React.Component {
     show: false,
     user: [],
 
-    id: this.props.userGlobal.id,
+    id_user: this.props.userGlobal.id,
     editNama: "",
     editNamaPengguna: "",
     editKataSandi: "",
     editFotoProfil: "",
     editBio: "",
-    fotolama: this.props.userGlobal.fotoProfil,
+    old_img: "aaaa",
   };
 
   fetchProfile = () => {
@@ -93,8 +93,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchProfile();
     this.fetchPost();
+    this.fetchProfile();
   }
 
   render() {
@@ -102,12 +102,12 @@ class Profile extends React.Component {
       <div className="container-fluid container-profile">
         <div className="container">
           <div className="row profile p-3 bayangan">
-            <div className="col-md-2 col-sm-12 foto  rounded-circle">
+            <div className=" profile-home  col-md-2 col-sm-12 foto  rounded-circle">
               <img
                 src={
                   this.props.userGlobal.fotoProfil == null
                     ? Foto
-                    : this.props.userGlobal.fotoProfil
+                    : API_URL + this.props.userGlobal.fotoProfil
                 }
                 alt=""
                 srcset=""

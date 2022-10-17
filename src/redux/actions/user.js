@@ -118,8 +118,8 @@ export const EditProfile = ({
   editKataSandi,
   editBio,
   editFotoProfil,
-  id,
-  fotolama,
+  id_user,
+  old_img,
 }) => {
   return (dispatch) => {
     const formData = new FormData();
@@ -127,11 +127,11 @@ export const EditProfile = ({
     formData.append("nama", editNama);
     formData.append("namaPengguna", editNamaPengguna);
     formData.append("kataSandi", editKataSandi);
-    formData.append("bio", editBio);
-    formData.append("id", id);
-    formData.append("image", fotolama);
+    formData.append("editBio", editBio);
+    formData.append("id_user", id_user);
+    formData.append("image", old_img);
     formData.append("image", editFotoProfil);
-    console.log(fotolama);
+    console.log("tes edit" + formData.editBio);
     Axios.patch(`${API_URL}/kepo/edit`, formData)
       .then((result) => {
         dispatch({

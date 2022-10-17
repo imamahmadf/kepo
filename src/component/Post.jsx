@@ -16,19 +16,21 @@ class BasicExample extends React.Component {
   };
 
   addKomen = () => {
-    Axios.post(`${API_URL}/komentar/post/${this.props.postData.id_post}`, {
-      isi: this.state.isiKomentar,
-      id_user_yg_komen: this.props.userGlobal.id_user,
-      id_komen_ini_ada_di_post_apa: parseInt(this.props.postData.id_post),
-    })
-      .then(() => {
-        alert("berhasil komen");
-
-        this.setState({ isiKomentar: "" });
+    if (this.state.isiKomentar) {
+      Axios.post(`${API_URL}/komentar/post/${this.props.postData.id_post}`, {
+        isi: this.state.isiKomentar,
+        id_user_yg_komen: this.props.userGlobal.id_user,
+        id_komen_ini_ada_di_post_apa: parseInt(this.props.postData.id_post),
       })
-      .catch(() => {
-        alert("eror nambah komen");
-      });
+        .then(() => {
+          alert("berhasil komen");
+
+          this.setState({ isiKomentar: "" });
+        })
+        .catch(() => {
+          alert("eror nambah komen");
+        });
+    }
   };
 
   inputHandler = (event) => {
@@ -71,8 +73,14 @@ class BasicExample extends React.Component {
                   onChange={this.inputHandler}
                   value={this.state.isiKomentar}
                 />
-                <Link to={`/content/${this.props.postData.id_post}`}>
-                  <div className="circle kirim-komentar bg-dark">
+                <Link
+                  to={
+                    this.state.isiKomentar
+                      ? `/content/${this.props.postData.id_post}`
+                      : `/`
+                  }
+                >
+                  <div className=" kirim-komentar">
                     <i
                       onClick={this.addKomen}
                       class="fa-solid fa-paper-plane icon-kirim"

@@ -9,9 +9,8 @@ import Axios from "axios";
 import Ubah from "../img/icon/ubah.png";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
-import Kirim from "../img/icon/kirim.png";
+
 import { Link } from "react-router-dom";
-import qs from "qs";
 
 class Content extends Component {
   state = {
@@ -26,19 +25,21 @@ class Content extends Component {
   };
 
   addKomen = () => {
-    Axios.post(`${API_URL}/komentar/post/${this.state.postData.id_post}`, {
-      isi: this.state.isiKomentar,
-      id_user_yg_komen: this.props.userGlobal.id_user,
-      id_komen_ini_ada_di_post_apa: parseInt(this.props.match.params.postId),
-    })
-      .then(() => {
-        Swal.fire("Good job!", "You clicked the button!", "success");
-        this.fetchPostKomen();
-        this.setState({ isiKomentar: "" });
+    if (this.state.isiKomentar) {
+      Axios.post(`${API_URL}/komentar/post/${this.state.postData.id_post}`, {
+        isi: this.state.isiKomentar,
+        id_user_yg_komen: this.props.userGlobal.id_user,
+        id_komen_ini_ada_di_post_apa: parseInt(this.props.match.params.postId),
       })
-      .catch(() => {
-        alert("eror nambah komen");
-      });
+        .then(() => {
+          Swal.fire("Good job!", "You clicked the button!", "success");
+          this.fetchPostKomen();
+          this.setState({ isiKomentar: "" });
+        })
+        .catch(() => {
+          alert("eror nambah komen");
+        });
+    }
   };
 
   fetchPostData = () => {
@@ -96,16 +97,11 @@ class Content extends Component {
   };
 
   deleteBtnHandler = () => {
-    alert(this.state.postData.foto);
-    let body = {
+    Axios.post(`${API_URL}/post/delete/${this.state.postData.id_post}`, {
       old_img: this.state.postData.foto,
-    };
-    Axios.delete(
-      `${API_URL}/post/delete/${this.state.postData.id_post}`,
-      qs.stringify(body)
-    )
+    })
       .then(() => {
-        alert("berhasil hapus");
+        Swal.fire("Good job!", "You clicked the button!", "success");
       })
       .catch((err) => {
         console.log(err);
@@ -189,12 +185,12 @@ class Content extends Component {
                       onChange={this.inputHandler}
                       value={this.state.isiKomentar}
                     />
-                    <img
-                      src={Kirim}
-                      onClick={this.addKomen}
-                      alt=""
-                      className="icon-kirim "
-                    />
+                    <div className=" kirim-komentar">
+                      <i
+                        onClick={this.addKomen}
+                        class="fa-solid fa-paper-plane icon-kirim"
+                      ></i>
+                    </div>
                   </div>
                   <img src={Like} alt="" className="icon" />
                   <p>{this.state.suka}</p>
@@ -262,14 +258,14 @@ class Content extends Component {
               <Modal.Footer>
                 <div onClick={() => this.setState({ show: !this.state.show })}>
                   {" "}
-                  {/* <Link to="/profile"> */}
-                  <Button
-                    onClick={() => this.deleteBtnHandler()}
-                    variant="danger"
-                  >
-                    Hapus
-                  </Button>
-                  {/* </Link> */}
+                  <Link to={`/profile/${this.props.userGlobal.namaPengguna}`}>
+                    <Button
+                      onClick={() => this.deleteBtnHandler()}
+                      variant="danger"
+                    >
+                      Hapus
+                    </Button>
+                  </Link>
                 </div>
                 <div>
                   <Button

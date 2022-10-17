@@ -42,6 +42,7 @@ class navbarScroll extends React.Component {
         this.setState({
           postKeterangan: "",
           postLokasi: "",
+          addFile: "",
         });
       })
       .catch((err) => {

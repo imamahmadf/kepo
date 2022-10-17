@@ -28,7 +28,10 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "sweetalert2": "^11.4.33",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2",
+    "formik": "^2.2.9"
   },
   "scripts": {
     "start": "react-scripts start",
