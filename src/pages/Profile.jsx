@@ -15,7 +15,7 @@ class Profile extends React.Component {
     show: false,
     user: [],
 
-    id_user: this.props.userGlobal.id,
+    id_user: this.props.userGlobal.id_user,
     editNama: "",
     editNamaPengguna: "",
     editKataSandi: "",
@@ -26,7 +26,7 @@ class Profile extends React.Component {
 
   fetchProfile = () => {
     console.log("fetchprofil", this.props.match.params.username);
-    Axios.get(`${API_URL}/kepo/login`, {
+    Axios.get(`${API_URL}/kepo/profil`, {
       params: {
         namaPengguna: this.props.match.params.username,
       },
@@ -105,16 +105,16 @@ class Profile extends React.Component {
             <div className=" profile-home  col-md-2 col-sm-12 foto  rounded-circle">
               <img
                 src={
-                  this.props.userGlobal.fotoProfil == null
+                  this.state.user.fotoProfil == null
                     ? Foto
-                    : API_URL + this.props.userGlobal.fotoProfil
+                    : API_URL + this.state.user.fotoProfil
                 }
                 alt=""
                 srcset=""
               />
             </div>
             <div className="col-md-10 col-sm-12">
-              <h1>{this.state.user.namaPengguna}</h1>
+              <h1>{this.state.user.nama}</h1>
               <p>{this.state.user.bio}</p>
               <span>
                 {this.props.userGlobal.id_user === this.state.user.id_user ? (
@@ -158,7 +158,7 @@ class Profile extends React.Component {
                     onChange={this.inputHandler}
                     placeholder="Leave a comment here"
                     name="editNama"
-                    value={this.state.editNama}
+                    // value={this.state.editNama}
                   />
                 </FloatingLabel>
                 <FloatingLabel
@@ -171,7 +171,7 @@ class Profile extends React.Component {
                     placeholder="Leave a comment here"
                     className="mt-3"
                     name="editNamaPengguna"
-                    value={this.state.editNamaPengguna}
+                    // value={this.state.editNamaPengguna}
                   />
                 </FloatingLabel>
                 {/* <FloatingLabel
@@ -213,7 +213,7 @@ class Profile extends React.Component {
                     style={{ height: "100px" }}
                     className="mt-3"
                     name="editBio"
-                    value={this.state.editBio}
+                    // value={this.state.editBio}
                   />
                 </FloatingLabel>
               </div>

@@ -19,16 +19,17 @@ function Register2() {
   // let nav = useNavigate();
   const dispatch = useDispatch(); //mapdisparchtoprops
 
-  const authSelector = useSelector((state) => state.auth); //mapstatetoprops
+  // const authSelector = useSelector((state) => state.auth); //mapstatetoprops
 
   const formik = useFormik({
     initialValues: {
       email: "",
       kataSandi: "",
+      kataSandiUlang: "",
       nama: "",
       namaPengguna: "",
-      bio: "",
     },
+
     validationSchema: Yup.object().shape({
       nama: Yup.string().required(""),
       namaPengguna: Yup.string().required(""),
@@ -36,11 +37,11 @@ function Register2() {
         .required("harap isi email")
         .email("format bukan email"),
       kataSandi: Yup.string()
-        .required("harap isi password")
-        .minLowercase(1, "password must contain at least 1 lower case letter")
-        .minUppercase(1, "password must contain at least 1 upper case letter")
-        .minNumbers(1, "password must contain at least 1 number")
-        .minSymbols(1, "password must contain at least 1 special character"),
+        .required("harap isi kata sandi")
+        .minLowercase(1, "kata sandi harus memiliki huruf kecil")
+        .minUppercase(1, "kata sandi harus memiliki huruf besar")
+        .minNumbers(1, "kata sandi harus memiliki angka")
+        .minSymbols(1, "kata sandi harus memiliki simbol"),
     }),
     validateOnChange: false,
     onSubmit: (values) => {
@@ -66,6 +67,13 @@ function Register2() {
               <div className="col-8 kotak-daftar shadow ">
                 <div>
                   <h5>Daftar2</h5>
+                  <div>
+                    {formik.errors.nama ? (
+                      <div className="alert alert-danger p-2">
+                        {formik.errors.nama}
+                      </div>
+                    ) : null}
+                  </div>
                   <InputGroup className="mb-3">
                     <Form.Control
                       placeholder="Nama"
@@ -77,6 +85,13 @@ function Register2() {
                       name="nama"
                     />
                   </InputGroup>
+                  <div>
+                    {formik.errors.namaPengguna ? (
+                      <div className="alert alert-danger p-2">
+                        {formik.errors.namaPengguna}
+                      </div>
+                    ) : null}
+                  </div>
                   <InputGroup className="mb-3">
                     <Form.Control
                       placeholder="Nama Pengguna"
@@ -88,6 +103,13 @@ function Register2() {
                       name="namaPengguna"
                     />
                   </InputGroup>
+                  <div>
+                    {formik.errors.email ? (
+                      <div className="alert alert-danger p-2">
+                        {formik.errors.email}
+                      </div>
+                    ) : null}
+                  </div>
                   <InputGroup className="mb-3">
                     <Form.Control
                       placeholder="Email"
@@ -99,8 +121,15 @@ function Register2() {
                       name="email"
                     />
                   </InputGroup>
+
+                  <div>
+                    {formik.errors.kataSandi ? (
+                      <div className="alert alert-danger p-2">
+                        {formik.errors.kataSandi}
+                      </div>
+                    ) : null}
+                  </div>
                   <InputGroup className="mb-3">
-                    <div>{formik.errors.kataSandi}</div>
                     <Form.Control
                       type="password"
                       placeholder="Kata Sandi"

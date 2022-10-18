@@ -28,12 +28,17 @@ class navbarScroll extends React.Component {
   };
 
   addPost = () => {
+    const d = new Date();
     const formData = new FormData();
 
     formData.append("keterangan", this.state.postKeterangan);
     formData.append("lokasi", this.state.postLokasi);
     formData.append("id_user_yg_post", this.props.userGlobal.id_user);
     formData.append("image", this.state.addFile);
+    formData.append(
+      "tanggal",
+      `${d.getDate()}-${d.getMonth()}-${d.getFullYear()}`
+    );
 
     Axios.post(`${API_URL}/post/upload`, formData)
       .then((result) => {
@@ -208,7 +213,7 @@ class navbarScroll extends React.Component {
                         src={
                           this.props.userGlobal.fotoProfil == null
                             ? Foto
-                            : this.props.userGlobal.fotoProfil
+                            : API_URL + this.props.userGlobal.fotoProfil
                         }
                         alt="foto profile"
                       />

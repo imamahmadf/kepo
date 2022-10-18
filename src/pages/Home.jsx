@@ -93,7 +93,7 @@ class Home extends React.Component {
                   srcSet={
                     this.props.userGlobal.fotoProfil == null
                       ? Foto
-                      : this.props.userGlobal.fotoProfil
+                      : API_URL + this.props.userGlobal.fotoProfil
                   }
                 />
               </div>

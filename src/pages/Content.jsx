@@ -135,6 +135,9 @@ class Content extends Component {
                   alt=""
                   src={API_URL + this.state.postData.foto}
                 />
+                <div>
+                  <h1>{this.state.postData.tanggal}</h1>
+                </div>
               </div>
             </div>
             <div className="col-md-5 col-sm-12 ">
@@ -146,7 +149,7 @@ class Content extends Component {
                         src={
                           this.state.postData.fotoProfil == null
                             ? Foto
-                            : this.state.postData.fotoProfil
+                            : API_URL + this.state.postData.fotoProfil
                         }
                         alt=""
                         srcset=""
@@ -306,7 +309,7 @@ class Komentar extends React.Component {
               src={
                 this.props.komentarData.fotoProfil == null
                   ? Foto
-                  : this.props.komentarData.fotoProfil
+                  : API_URL + this.props.komentarData.fotoProfil
               }
               alt=""
               srcset=""

@@ -8,7 +8,6 @@ export const registerUser = ({
   email,
   kataSandi,
   fotoProfil,
-  bio,
 }) => {
   return (dispatch) => {
     Axios.post(`${API_URL}/kepo/register`, {
@@ -17,7 +16,7 @@ export const registerUser = ({
       email,
       kataSandi,
       fotoProfil,
-      bio,
+      bio: "ceritakan dirimu",
     })
       .then((result) => {
         dispatch({
@@ -37,38 +36,17 @@ export const loginUser = ({ namaPengguna, kataSandi }) => {
     Axios.get(`${API_URL}/kepo/login`, {
       params: {
         namaPengguna,
+        kataSandi,
       },
     })
       .then((result) => {
-        if (
-          namaPengguna === result.data[0].namaPengguna ||
-          namaPengguna === result.data[0].email
-        ) {
-          if (kataSandi === result.data[0].kataSandi) {
-            delete result.data[0].kataSandi;
-
-            localStorage.setItem(
-              "userDataKepo",
-              JSON.stringify(result.data[0])
-            );
-            dispatch({
-              type: "USER_LOGIN",
-              payload: result.data[0],
-            });
-          } else {
-            // handle eror rong pass
-            dispatch({
-              type: "USER_ERROR",
-              payload: "Kata Sandi Salah",
-            });
-          }
-        } else {
-          // handle eror user name not found
-          dispatch({
-            type: "USER_ERROR",
-            payload: "User name atau email tidak ditemukan",
-          });
-        }
+        delete result.data[0].kataSandi;
+        console.log(result.data[0]);
+        localStorage.setItem("userDataKepo", JSON.stringify(result.data[0]));
+        dispatch({
+          type: "USER_LOGIN",
+          payload: result.data[0],
+        });
       })
       .catch((err) => {
         alert(`terjadi kesalahan ke server ketika login`);
@@ -122,18 +100,20 @@ export const EditProfile = ({
   old_img,
 }) => {
   return (dispatch) => {
+    console.log(editBio);
     const formData = new FormData();
 
-    formData.append("nama", editNama);
-    formData.append("namaPengguna", editNamaPengguna);
+    formData.append("editNama", editNama);
+    formData.append("editNamaPengguna", editNamaPengguna);
     formData.append("kataSandi", editKataSandi);
     formData.append("editBio", editBio);
     formData.append("id_user", id_user);
-    formData.append("image", old_img);
+    formData.append("old_image", old_img);
     formData.append("image", editFotoProfil);
-    console.log("tes edit" + formData.editBio);
-    Axios.patch(`${API_URL}/kepo/edit`, formData)
+
+    Axios.patch(`${API_URL}/kepo/${id_user}`, formData)
       .then((result) => {
+        console.log("tes edit" + result.data[0]);
         dispatch({
           type: "USER_EDIT",
           payload: result.data,

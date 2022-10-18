@@ -37,7 +37,7 @@ class App extends React.Component {
               <Route component={Auth} path="authentication/:token" />
               <Route component={Login} path="/login" />
               <Route component={Register} path="/register" />
-              {/* <Route component={Register2} path="/register2" /> */}
+              <Route component={Register2} path="/register2" />
               <Route component={Content} path="/content/:postId" />
               <Route component={Profile} path="/profile/:username" />
               <Route component={Home} path="/" />
