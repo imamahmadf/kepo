@@ -113,10 +113,10 @@ export const EditProfile = ({
 
     Axios.patch(`${API_URL}/kepo/${id_user}`, formData)
       .then((result) => {
-        console.log("tes edit" + result.data[0]);
+        console.log("tes edit response" + result.data[0].namaPengguna);
         dispatch({
           type: "USER_EDIT",
-          payload: result.data,
+          payload: result.data[0],
         });
 
         Swal.fire("Good job!", "You clicked the button!", "success");
