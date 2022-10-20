@@ -8,18 +8,37 @@ import "./home.css";
 import { connect } from "react-redux";
 import Kontak from "../img/icon/kontak.png";
 import Cari from "../img/icon/cari.png";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Home extends React.Component {
   state = {
     post: [],
     users: [],
+    hasMoreItems: true,
+    page: 1,
   };
 
   fetchPost = () => {
     Axios.get(`${API_URL}/post/get`)
       .then((result) => {
         console.log(result);
-        this.setState({ post: result.data });
+
+        // this.setState({ post: result.data });
+        this.setState({ post: [...this.state.post, ...result.data] });
+
+        // console.log(this.state.post);
+        // console.log(result.data.length);
+
+        this.setState({ page: this.state.page + 1 });
+
+        if (result.data?.length == 0) {
+          this.setState({ hasMoreItems: false });
+        } else {
+          this.setState({ hasMoreItems: true });
+          // alert(this.state.hasMoreItems);
+        }
+
+        // alert("abc");
       })
       .catch(() => {
         alert("terjadi kesalahan di serveraaa");
@@ -73,7 +92,7 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchPost();
+    // this.fetchPost();
   }
 
   render() {
@@ -159,7 +178,7 @@ class Home extends React.Component {
               <Story />
             </div>
           </div>
-          <div className="row justify-content-center">{this.renderPost()}</div>
+          {/* <div className="row justify-content-center">{this.renderPost()}</div> */}
         </div>
         <div className="col-lg-2 col-12 kotak-kanan-home d-md-none d-lg-block">
           <div className="pt-3 sticky-lg-top">
@@ -255,6 +274,25 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
+        {/* <InfiniteScroll
+          pageStart={0}
+          loadMore={this.fetchPost()} //bertugas untuk fetch data
+          hasMore={true} //trigger untuk melakukan fetch data
+          // loader={alert("loading")} //event yang terjadi pada saat scroll
+        >
+          <div>{this.renderPost()}</div>
+        </InfiniteScroll> */}
+
+        <InfiniteScroll
+          dataLength={10}
+          // pullDownToRefreshThreshold={50}
+          next={this.fetchPost()}
+          scrollableTarget="scrollableDiv"
+          hasMore={this.state.hasMoreItems}
+          loader={<h4>Loading...</h4>}
+        >
+          <div>{this.renderPost()}</div>
+        </InfiniteScroll>
       </div>
     );
   }

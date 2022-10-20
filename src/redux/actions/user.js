@@ -1,6 +1,5 @@
 import Axios from "axios";
 import { API_URL } from "../../Constant/API";
-import Swal from "sweetalert2";
 
 export const registerUser = ({
   nama,
@@ -90,40 +89,10 @@ export const checkStorage = () => {
   };
 };
 
-export const EditProfile = ({
-  editNama,
-  editNamaPengguna,
-  editKataSandi,
-  editBio,
-  editFotoProfil,
-  id_user,
-  old_img,
-}) => {
-  return (dispatch) => {
-    console.log(editBio);
-    const formData = new FormData();
-
-    formData.append("editNama", editNama);
-    formData.append("editNamaPengguna", editNamaPengguna);
-    formData.append("kataSandi", editKataSandi);
-    formData.append("editBio", editBio);
-    formData.append("id_user", id_user);
-    formData.append("old_image", old_img);
-    formData.append("image", editFotoProfil);
-
-    Axios.patch(`${API_URL}/kepo/${id_user}`, formData)
-      .then((result) => {
-        console.log("tes edit response" + result.data[0].namaPengguna);
-        dispatch({
-          type: "USER_EDIT",
-          payload: result.data[0],
-        });
-
-        Swal.fire("Good job!", "You clicked the button!", "success");
-      })
-      .catch((err) => {
-        alert("terjadi kesalahan di server");
-        console.log(err);
-      });
+export const EditProfileGlobal = (data) => {
+  console.log("Data masuk Action dari component :", data);
+  return {
+    type: "USER_EDIT",
+    payload: data,
   };
 };

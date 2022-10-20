@@ -1,14 +1,12 @@
-import { useState } from "react";
-import Axios from "axios";
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
 import { InputGroup, Form, Button } from "react-bootstrap";
-import qs from "qs";
+
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/actions/user";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Logo from "../img/kepologo.png";
 
 function Register2() {
@@ -19,7 +17,7 @@ function Register2() {
   // let nav = useNavigate();
   const dispatch = useDispatch(); //mapdisparchtoprops
 
-  // const authSelector = useSelector((state) => state.auth); //mapstatetoprops
+  const userSelector = useSelector((state) => state.user); //mapstatetoprops
 
   const formik = useFormik({
     initialValues: {
@@ -49,6 +47,9 @@ function Register2() {
     },
   });
 
+  if (userSelector.namaPengguna) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div className="container-fluid dasar p-0 ">
       <div className="container ">

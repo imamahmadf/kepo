@@ -6,8 +6,9 @@ import "./profile.css";
 import Pengaturan from "../img/icon/pengaturan.png";
 import Axios from "axios";
 import { API_URL } from "../Constant/API";
-import { EditProfile } from "../redux/actions/user";
+import { EditProfileGlobal } from "../redux/actions/user";
 import Foto from "../img/default-profile.jpg";
+import Swal from "sweetalert2";
 
 class Profile extends React.Component {
   state = {
@@ -21,7 +22,46 @@ class Profile extends React.Component {
     editKataSandi: "",
     editFotoProfil: "",
     editBio: "",
-    old_img: "aaaa",
+    old_img: this.props.userGlobal.fotoProfil,
+  };
+
+  fetchPost = () => {
+    console.log(this.props.match.params.userId);
+    Axios.get(`${API_URL}/post/profile/${this.props.match.params.username}`, {})
+      .then((result) => {
+        console.log("tes proffile" + result.data);
+
+        this.setState({ post: result.data });
+      })
+      .catch(() => {
+        alert("terjadi kesalahan di server");
+      });
+  };
+
+  EditProfile = () => {
+    const formData = new FormData();
+
+    formData.append("editNama", this.state.editNama);
+    formData.append("editNamaPengguna", this.state.editNamaPengguna);
+    formData.append("kataSandi", this.state.editKataSandi);
+    formData.append("editBio", this.state.editBio);
+    formData.append("id_user", this.state.id_user);
+    formData.append("old_img", this.state.old_img);
+    formData.append("image", this.state.editFotoProfil);
+
+    Axios.patch(`${API_URL}/kepo/${this.state.id_user}`, formData)
+      .then((result) => {
+        console.log("tes edit response" + result.data[0].namaPengguna);
+        this.props.EditProfileGlobal(result.data[0]);
+        this.fetchProfile();
+        this.fetchPost();
+
+        Swal.fire("Good job!", "You clicked the button!", "success");
+      })
+      .catch((err) => {
+        alert("terjadi kesalahan di server");
+        console.log(err);
+      });
   };
 
   fetchProfile = () => {
@@ -37,19 +77,6 @@ class Profile extends React.Component {
       })
       .catch(() => {
         alert("terjadi kesalahan di server1");
-      });
-  };
-
-  fetchPost = () => {
-    console.log(this.props.match.params.userId);
-    Axios.get(`${API_URL}/post/profile/${this.props.match.params.username}`, {})
-      .then((result) => {
-        console.log("tes proffile" + result.data);
-
-        this.setState({ post: result.data });
-      })
-      .catch(() => {
-        alert("terjadi kesalahan di server");
       });
   };
 
@@ -226,10 +253,7 @@ class Profile extends React.Component {
                 Close
               </Button>
               <div onClick={() => this.setState({ show: !this.state.show })}>
-                <Button
-                  onClick={() => this.props.EditProfile(this.state)}
-                  variant="primary"
-                >
+                <Button onClick={() => this.EditProfile()} variant="primary">
                   Save Username & Password
                 </Button>
               </div>
@@ -248,7 +272,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  EditProfile,
+  EditProfileGlobal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

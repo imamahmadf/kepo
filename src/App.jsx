@@ -9,7 +9,8 @@ import Register2 from "./pages/Register2";
 import Content from "./pages/Content";
 import Profile from "./pages/Profile";
 import Navbar from "./component/Navbar";
-import Auth from "./pages/Auth";
+
+import VerificationPage from "./pages/verification";
 import { connect } from "react-redux";
 import { UserKeepLogin, checkStorage } from "./redux/actions/user";
 
@@ -34,7 +35,10 @@ class App extends React.Component {
           <BrowserRouter>
             <Navbar />
             <Switch>
-              <Route component={Auth} path="authentication/:token" />
+              <Route
+                component={VerificationPage}
+                path="/authentication/:token"
+              />
               <Route component={Login} path="/login" />
               <Route component={Register} path="/register" />
               <Route component={Register2} path="/register2" />

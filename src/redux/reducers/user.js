@@ -7,6 +7,7 @@ const init_state = {
   bio: "",
   errMsg: "",
   storageIsChecked: false,
+  status: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

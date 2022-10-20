@@ -3,15 +3,18 @@ import Logo from "../img/kepologo.png";
 import axios from "axios";
 import { API_URL } from "../Constant/API";
 
-class Auth extends React.Component {
-  state = {
-    message: "Loading...",
-  };
+class VerificationPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: "Loading...",
+    };
+  }
 
   componentDidMount() {
     axios
       .patch(
-        `${API_URL}/kepo/verified`,
+        API_URL + `/kepo/verified`,
         {},
         {
           headers: {
@@ -28,13 +31,11 @@ class Auth extends React.Component {
   }
   render() {
     return (
-      <div className="container bg-dark">
-        <h1>selamat datang</h1>
-        <img src={Logo} alt="" className="logo" />
+      <div className="container p-5">
         <h2>{this.state.message}</h2>
       </div>
     );
   }
 }
 
-export default Auth;
+export default VerificationPage;

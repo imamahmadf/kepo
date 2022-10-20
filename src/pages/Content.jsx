@@ -135,14 +135,11 @@ class Content extends Component {
                   alt=""
                   src={API_URL + this.state.postData.foto}
                 />
-                <div>
-                  <h1>{this.state.postData.tanggal}</h1>
-                </div>
               </div>
             </div>
             <div className="col-md-5 col-sm-12 ">
               <div className="profile-content bayangan bingkai-profile">
-                <div className=" d-flex justify-content-between m-3 border-bottom  border-1">
+                <div className=" d-flex justify-content-between mx-3 my-1 border-bottom  border-1">
                   <div className="d-flex">
                     <div className="profile-navbar rounded-circle my-aut">
                       <img
@@ -163,19 +160,24 @@ class Content extends Component {
                     </div>
                   </div>
                   <div>
-                    {this.props.userGlobal.namaPengguna ===
-                    this.state.postData.namaPengguna ? (
-                      <img
-                        onClick={() => this.editToggle(this.state.postData)}
-                        src={Ubah}
-                        alt=""
-                        height="18"
-                      />
-                    ) : null}
+                    <div className="d-flex justify-content-end">
+                      {this.props.userGlobal.namaPengguna ===
+                      this.state.postData.namaPengguna ? (
+                        <img
+                          onClick={() => this.editToggle(this.state.postData)}
+                          src={Ubah}
+                          alt=""
+                          height="18"
+                        />
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-
-                <div className="m-3">
+                <div className="d-flex justify-content-end tanggal mx-3 mb-1">
+                  <i class="fa-solid fa-calendar"></i>
+                  <p>{this.state.postData.tanggal}</p>
+                </div>
+                <div className="mx-3">
                   <p>{this.state.postData.keterangan}</p>
                 </div>
                 {this.renderKomen()}

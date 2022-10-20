@@ -49,3 +49,20 @@
     border-radius: 10px;
 }
 
+.tanggal {
+    font-size: 12px;
+    color: gray;
+}
+
+.tanggal p{
+    margin-bottom: 0px;
+    margin-left: 4px;
+    
+}
+
+.tanggal i {
+    margin-top: 3px;
+    
+    
+}
+
