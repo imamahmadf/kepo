@@ -1,32 +1,48 @@
 import Axios from "axios";
 import { API_URL } from "../../Constant/API";
+import Swal from "sweetalert2";
 
 export const registerUser = ({
   nama,
   namaPengguna,
   email,
   kataSandi,
+  kataSandiUlang,
   fotoProfil,
 }) => {
   return (dispatch) => {
-    Axios.post(`${API_URL}/kepo/register`, {
-      nama,
-      namaPengguna,
-      email,
-      kataSandi,
-      fotoProfil,
-      bio: "ceritakan dirimu",
-    })
-      .then((result) => {
-        dispatch({
-          type: "USER_LOGIN",
-          payload: result.data,
-        });
-        alert(`Selamat datang di Kepo`);
+    if (kataSandi === kataSandiUlang) {
+      Axios.post(`${API_URL}/kepo/register`, {
+        nama,
+        namaPengguna,
+        email,
+        kataSandi,
+        kataSandiUlang,
+        fotoProfil,
+        bio: "ceritakan dirimu",
       })
-      .catch(() => {
-        alert(`gagal mendfatar silahkan mendaftar ulang action`);
+        .then((result) => {
+          console.log(result.data);
+          dispatch({
+            type: "USER_LOGIN",
+            payload: result.data,
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Selamat Datang di Kepo",
+            text: "Silahkan Verifikasi Akun Anda!",
+          });
+        })
+        .catch(() => {
+          alert(`gagal mendfatar silahkan mendaftar ulang action`);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "kata Sandi tidak sesuai",
+        text: "cek ulang kata sandi anda",
       });
+    }
   };
 };
 

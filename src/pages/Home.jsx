@@ -8,7 +8,8 @@ import "./home.css";
 import { connect } from "react-redux";
 import Kontak from "../img/icon/kontak.png";
 import Cari from "../img/icon/cari.png";
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroller";
+import { Redirect } from "react-router-dom";
 
 class Home extends React.Component {
   state = {
@@ -19,17 +20,14 @@ class Home extends React.Component {
   };
 
   fetchPost = () => {
-    Axios.get(`${API_URL}/post/get`)
+    Axios.get(`${API_URL}/post/get/${this.state.page}`)
       .then((result) => {
-        console.log(result);
-
         // this.setState({ post: result.data });
         this.setState({ post: [...this.state.post, ...result.data] });
+        this.setState({ page: this.state.page + 1 });
 
         // console.log(this.state.post);
         // console.log(result.data.length);
-
-        this.setState({ page: this.state.page + 1 });
 
         if (result.data?.length == 0) {
           this.setState({ hasMoreItems: false });
@@ -37,7 +35,7 @@ class Home extends React.Component {
           this.setState({ hasMoreItems: true });
           // alert(this.state.hasMoreItems);
         }
-
+        console.log(this.state.page, this.state.post);
         // alert("abc");
       })
       .catch(() => {
@@ -45,57 +43,16 @@ class Home extends React.Component {
       });
   };
 
-  // addPost = () => {
-  //   Axios.post(`${API_URL}/post`, {
-  //     foto: this.state.postFoto,
-  //     lokasi: this.state.postLokasi,
-  //     keterangan: this.state.postKeterangan,
-  //     suka: this.state.postSuka,
-  //     komentar: this.state.postKomentar,
-  //     namaPengguna: this.props.userGlobal.namaPengguna,
-  //     fotoProfil: this.props.userGlobal.fotoProfil,
-  //   })
-  //     .then(() => {
-  //       Swal.fire({
-  //         title: "Sweet!",
-  //         text: "Modal with a custom image.",
-  //         imageUrl: { foto: this.state.postFoto },
-  //         imageWidth: 400,
-  //         imageHeight: 200,
-  //         imageAlt: "Custom image",
-  //       });
-  //       this.fetchPost();
-  //       this.setState({
-  //         postKeterangan: "",
-  //         postFoto: "",
-  //         postLokasi: "",
-  //         postSuka: 0,
-  //         postKomentar: [],
-  //         postUserId: 1,
-  //       });
-  //     })
-  //     .catch(() => {
-  //       alert("gagal addPsot");
-  //     });
-  // };
-
-  // inputHandler = (event) => {
-  //   const value = event.target.value;
-  //   const name = event.target.name;
-
-  //   this.setState({ [name]: value });
-  // };
   renderPost = () => {
     return this.state.post.map((val) => {
       return <Post postData={val} />;
     });
   };
 
-  componentDidMount() {
-    // this.fetchPost();
-  }
-
   render() {
+    if (!this.props.userGlobal.nama) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div
         className="row"
@@ -120,7 +77,13 @@ class Home extends React.Component {
                 <h3 className="text-center">{this.props.userGlobal.nama}</h3>
                 <p className="text-center">{this.props.userGlobal.bio}</p>
               </div>
+              {this.props.userGlobal.status === "unverified" ? (
+                <div className="bg-danger varifikasi text-center">
+                  <h6>verifikasi akun Anda</h6>
+                </div>
+              ) : null}
             </div>
+
             {/* tombol home */}
             <div className="row my-4 home-button bayangan p-2">
               <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center ">
@@ -179,6 +142,24 @@ class Home extends React.Component {
             </div>
           </div>
           {/* <div className="row justify-content-center">{this.renderPost()}</div> */}
+          <div>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={this.fetchPost}
+              hasMore={this.state.hasMoreItems}
+              // loader={
+              //   <div className="loader" key={0}>
+              //     Loading ...
+              //   </div>
+              // }
+            >
+              {
+                <div className="row justify-content-center">
+                  {this.renderPost()}
+                </div>
+              }
+            </InfiniteScroll>
+          </div>
         </div>
         <div className="col-lg-2 col-12 kotak-kanan-home d-md-none d-lg-block">
           <div className="pt-3 sticky-lg-top">
@@ -201,7 +182,7 @@ class Home extends React.Component {
                   <p className="m-0">Pantura</p>
                 </div>
                 <button type="button" className="btn btn-primary mt-3 mb-1">
-                  Primary
+                  Acara Lainnya
                 </button>
               </div>
             </div>
@@ -274,25 +255,6 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-        {/* <InfiniteScroll
-          pageStart={0}
-          loadMore={this.fetchPost()} //bertugas untuk fetch data
-          hasMore={true} //trigger untuk melakukan fetch data
-          // loader={alert("loading")} //event yang terjadi pada saat scroll
-        >
-          <div>{this.renderPost()}</div>
-        </InfiniteScroll> */}
-
-        <InfiniteScroll
-          dataLength={10}
-          // pullDownToRefreshThreshold={50}
-          next={this.fetchPost()}
-          scrollableTarget="scrollableDiv"
-          hasMore={this.state.hasMoreItems}
-          loader={<h4>Loading...</h4>}
-        >
-          <div>{this.renderPost()}</div>
-        </InfiniteScroll>
       </div>
     );
   }

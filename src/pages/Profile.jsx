@@ -56,7 +56,7 @@ class Profile extends React.Component {
         this.fetchProfile();
         this.fetchPost();
 
-        Swal.fire("Good job!", "You clicked the button!", "success");
+        Swal.fire("Ubah Profil", "Profil berhasil diubah");
       })
       .catch((err) => {
         alert("terjadi kesalahan di server");
@@ -144,7 +144,8 @@ class Profile extends React.Component {
               <h1>{this.state.user.nama}</h1>
               <p>{this.state.user.bio}</p>
               <span>
-                {this.props.userGlobal.id_user === this.state.user.id_user ? (
+                {this.props.userGlobal.id_user === this.state.user.id_user &&
+                this.props.userGlobal.status === "verified" ? (
                   <>
                     <img
                       onClick={() => this.editToggle(this.state.user)}
@@ -250,11 +251,11 @@ class Profile extends React.Component {
                 onClick={() => this.setState({ show: !this.state.show })}
                 variant="secondary"
               >
-                Close
+                Batal
               </Button>
               <div onClick={() => this.setState({ show: !this.state.show })}>
                 <Button onClick={() => this.EditProfile()} variant="primary">
-                  Save Username & Password
+                  Simpan
                 </Button>
               </div>
             </Modal.Footer>

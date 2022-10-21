@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Register from "./pages/Register";
-import Register2 from "./pages/Register2";
+
 import Content from "./pages/Content";
 import Profile from "./pages/Profile";
 import Navbar from "./component/Navbar";
@@ -31,23 +31,19 @@ class App extends React.Component {
   render() {
     if (this.props.userGlobal.storageIsChecked) {
       return (
-        <div className="dark-mode">
-          <BrowserRouter>
-            <Navbar />
-            <Switch>
-              <Route
-                component={VerificationPage}
-                path="/authentication/:token"
-              />
-              <Route component={Login} path="/login" />
-              <Route component={Register} path="/register" />
-              <Route component={Register2} path="/register2" />
-              <Route component={Content} path="/content/:postId" />
-              <Route component={Profile} path="/profile/:username" />
-              <Route component={Home} path="/" />
-            </Switch>
-          </BrowserRouter>
-        </div>
+        <BrowserRouter>
+          <Navbar />
+          <Switch>
+            <Route component={VerificationPage} path="/authentication/:token" />
+            <Route component={Login} path="/login" />
+            <Route component={Register} path="/register" />
+
+            <Route component={Content} path="/content/:postId" />
+            <Route component={Profile} path="/profile/:username" />
+
+            <Route component={Home} path="/" />
+          </Switch>
+        </BrowserRouter>
       );
     }
     return <div>Loading......</div>;

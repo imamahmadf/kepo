@@ -90,7 +90,7 @@ class Content extends Component {
       lokasi: this.state.editLokasi,
       keterangan: this.state.editKeterangan,
     }).then(() => {
-      Swal.fire("Good job!", "You clicked the button!", "success");
+      Swal.fire("Berhasil", "Keterangan berhasil di ubah");
       this.fetchPostData();
       this.setState({ show: !this.state.show });
     });
@@ -101,7 +101,11 @@ class Content extends Component {
       old_img: this.state.postData.foto,
     })
       .then(() => {
-        Swal.fire("Good job!", "You clicked the button!", "success");
+        Swal.fire({
+          icon: "error",
+          title: "Terhapus",
+          text: "Foto berhasil dihapus",
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -181,27 +185,29 @@ class Content extends Component {
                   <p>{this.state.postData.keterangan}</p>
                 </div>
                 {this.renderKomen()}
-                <div className="d-flex flex-row m-3">
-                  <div className="d-flex komentar">
-                    <input
-                      name="isiKomentar"
-                      type="text"
-                      placeholder="Komentar ..."
-                      onChange={this.inputHandler}
-                      value={this.state.isiKomentar}
-                    />
-                    <div className=" kirim-komentar">
-                      <i
-                        onClick={this.addKomen}
-                        class="fa-solid fa-paper-plane icon-kirim"
-                      ></i>
+                {this.props.userGlobal.status === "verified" ? (
+                  <div className="d-flex flex-row m-3">
+                    <div className="d-flex komentar">
+                      <input
+                        name="isiKomentar"
+                        type="text"
+                        placeholder="Komentar ..."
+                        onChange={this.inputHandler}
+                        value={this.state.isiKomentar}
+                      />
+                      <div className=" kirim-komentar">
+                        <i
+                          onClick={this.addKomen}
+                          class="fa-solid fa-paper-plane icon-kirim"
+                        ></i>
+                      </div>
                     </div>
+                    <img src={Like} alt="" className="icon" />
+                    <p>{this.state.suka}</p>
+                    <img src={Comment} alt="" className="icon" />
+                    <p>{this.state.postKomen.length}</p>
                   </div>
-                  <img src={Like} alt="" className="icon" />
-                  <p>{this.state.suka}</p>
-                  <img src={Comment} alt="" className="icon" />
-                  <p>{this.state.postKomen.length}</p>
-                </div>
+                ) : null}
                 <Link to={`/profile/${this.state.postData.namaPengguna}`}>
                   <div className="d-grid gap-2 mx-3 mb-3">
                     <Button
@@ -274,16 +280,17 @@ class Content extends Component {
                 </div>
                 <div>
                   <Button
+                    className="mx-3"
                     onClick={() => this.setState({ show: !this.state.show })}
                     variant="secondary"
                   >
-                    Close
+                    Batal
                   </Button>
                   <Button
                     onClick={() => this.saveBtnHandler()}
                     variant="primary"
                   >
-                    Save
+                    Simpan
                   </Button>
                 </div>
               </Modal.Footer>

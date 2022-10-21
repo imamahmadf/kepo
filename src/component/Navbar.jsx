@@ -42,7 +42,7 @@ class navbarScroll extends React.Component {
 
     Axios.post(`${API_URL}/post/upload`, formData)
       .then((result) => {
-        Swal.fire("Good job!", "You clicked the button!", "success");
+        Swal.fire("Unggah Foto", "Foto berhasil diunggah");
 
         this.setState({
           postKeterangan: "",
@@ -141,14 +141,16 @@ class navbarScroll extends React.Component {
       >
         <Container fluid className="px-5">
           <Navbar.Brand href="#home"></Navbar.Brand>
-          <div className="">
-            <img
-              src={Logo}
-              height="45"
-              className="logo-kepo-kecil "
-              alt="React Bootstrap"
-            />
-          </div>
+          {this.props.userGlobal.nama ? (
+            <div className="">
+              <img
+                src={Logo}
+                height="45"
+                className="logo-kepo-kecil "
+                alt="React Bootstrap"
+              />
+            </div>
+          ) : null}
           <Navbar.Toggle aria-controls="navbarScroll" />
 
           <Navbar.Collapse
@@ -180,12 +182,14 @@ class navbarScroll extends React.Component {
                         <i class="fa-solid fa-house"></i>
                       </button>
                     </Link>
-                    <button
-                      onClick={() => this.postToggle(this.state.show)}
-                      className="tombol mx-3"
-                    >
-                      <i class="fa-solid fa-circle-plus"></i>
-                    </button>
+                    {this.props.userGlobal.status === "verified" ? (
+                      <button
+                        onClick={() => this.postToggle(this.state.show)}
+                        className="tombol mx-3"
+                      >
+                        <i class="fa-solid fa-circle-plus"></i>
+                      </button>
+                    ) : null}
                     <button className="tombol mx-3">
                       <i class="fa-solid fa-bell"></i>
                     </button>
@@ -235,7 +239,9 @@ class navbarScroll extends React.Component {
             keyboard={false}
           >
             <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">tess</Modal.Title>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Unggah Foto
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div>
@@ -249,7 +255,7 @@ class navbarScroll extends React.Component {
                       value={this.state.postKeterangan}
                       name="postKeterangan"
                       type="text"
-                      placeholder="Sebarkan aibmu..."
+                      placeholder="Sebarkan Ceritamu"
                       id="exampleFormControlTextarea1"
                       rows="3"
                     ></textarea>
@@ -285,7 +291,7 @@ class navbarScroll extends React.Component {
                         widht="100%"
                         height="300x"
                       />
-                      <label htmlFor="img">image</label>
+
                       <input
                         type="file"
                         className="form-control"
@@ -304,7 +310,7 @@ class navbarScroll extends React.Component {
                 onClick={() => this.setState({ show: !this.state.show })}
                 variant="secondary"
               >
-                Close
+                Batal
               </Button>
               <div onClick={() => this.setState({ show: !this.state.show })}>
                 <Link
@@ -318,7 +324,7 @@ class navbarScroll extends React.Component {
                     onClick={() => this.addPost(this.state)}
                     variant="primary"
                   >
-                    Save
+                    Unggah
                   </Button>
                 </Link>
               </div>

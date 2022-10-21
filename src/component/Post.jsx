@@ -23,8 +23,6 @@ class BasicExample extends React.Component {
         id_komen_ini_ada_di_post_apa: parseInt(this.props.postData.id_post),
       })
         .then(() => {
-          alert("berhasil komen");
-
           this.setState({ isiKomentar: "" });
         })
         .catch(() => {
@@ -71,35 +69,37 @@ class BasicExample extends React.Component {
                 <h6 className="lokasi">{this.props.postData.lokasi}</h6>
               </div>
             </div>
-            <div className="d-flex flex-row">
-              <div className="d-flex komentar">
-                <input
-                  type="text"
-                  name="isiKomentar"
-                  placeholder="Komentar ..."
-                  onChange={this.inputHandler}
-                  value={this.state.isiKomentar}
-                />
-                <Link
-                  to={
-                    this.state.isiKomentar
-                      ? `/content/${this.props.postData.id_post}`
-                      : `/`
-                  }
-                >
-                  <div className=" kirim-komentar">
-                    <i
-                      onClick={this.addKomen}
-                      class="fa-solid fa-paper-plane icon-kirim"
-                    ></i>
-                  </div>
-                </Link>
+            {this.props.userGlobal.status === "verified" ? (
+              <div className="d-flex flex-row">
+                <div className="d-flex komentar">
+                  <input
+                    type="text"
+                    name="isiKomentar"
+                    placeholder="Komentar ..."
+                    onChange={this.inputHandler}
+                    value={this.state.isiKomentar}
+                  />
+                  <Link
+                    to={
+                      this.state.isiKomentar
+                        ? `/content/${this.props.postData.id_post}`
+                        : `/`
+                    }
+                  >
+                    <div className=" kirim-komentar">
+                      <i
+                        onClick={this.addKomen}
+                        class="fa-solid fa-paper-plane icon-kirim"
+                      ></i>
+                    </div>
+                  </Link>
+                </div>
+                <img src={Like} alt="" className="icon" />
+                <p>{this.props.postData.total_suka}</p>
+                <img src={Comment} alt="" className="icon" />
+                <p>{this.props.postData.total_komentar}</p>
               </div>
-              <img src={Like} alt="" className="icon" />
-              <p>{this.props.postData.total_suka}</p>
-              <img src={Comment} alt="" className="icon" />
-              <p>{this.props.postData.total_komentar}</p>
-            </div>
+            ) : null}
           </Card.Body>
         </Card>
       </div>

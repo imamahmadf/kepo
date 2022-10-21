@@ -193,3 +193,9 @@ p {
 
 }
 
+.varifikasi {
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    font-size: 15px;
+}
