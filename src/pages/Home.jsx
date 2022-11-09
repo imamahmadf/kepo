@@ -85,7 +85,7 @@ class Home extends React.Component {
             </div>
 
             {/* tombol home */}
-            <div className="row my-4 home-button bayangan p-2">
+            <div className="row mt-4 home-button bayangan p-2">
               <div className="py-2 col-sm-6 col-md-12 d-flex align-items-center ">
                 <button className="tombol bayangan me-2">
                   <i class="fa-solid fa-user-group"></i>
@@ -122,7 +122,7 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-        <div className="col-lg-8 " style={{ marginTop: "70px" }}>
+        <div className="col-lg-8 home">
           <div className="pembungkus-story">
             <div className="story bayangan flex-row d-flex">
               <Story />

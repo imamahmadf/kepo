@@ -55,13 +55,21 @@ export const loginUser = ({ namaPengguna, kataSandi }) => {
       },
     })
       .then((result) => {
-        delete result.data[0].kataSandi;
-        console.log(result.data[0]);
-        localStorage.setItem("userDataKepo", JSON.stringify(result.data[0]));
-        dispatch({
-          type: "USER_LOGIN",
-          payload: result.data[0],
-        });
+        console.log("hasil" + result);
+        if (result) {
+          delete result.data[0].kataSandi;
+          console.log(result.data[0]);
+          localStorage.setItem("userDataKepo", JSON.stringify(result.data[0]));
+          dispatch({
+            type: "USER_LOGIN",
+            payload: result.data[0],
+          });
+        } else {
+          dispatch({
+            type: "USER_ERROR",
+            payload: "kata sandi salah",
+          });
+        }
       })
       .catch((err) => {
         alert(`terjadi kesalahan ke server ketika login`);

@@ -9,6 +9,7 @@ import { API_URL } from "../Constant/API";
 import { EditProfileGlobal } from "../redux/actions/user";
 import Foto from "../img/default-profile.jpg";
 import Swal from "sweetalert2";
+import { Link, Redirect } from "react-router-dom";
 
 class Profile extends React.Component {
   state = {
@@ -125,84 +126,85 @@ class Profile extends React.Component {
   }
 
   render() {
-    return (
-      <div className="container-fluid container-profile">
-        <div className="container">
-          <div className="row profile p-3 bayangan">
-            <div className=" profile-home  col-md-2 col-sm-12 foto  rounded-circle">
-              <img
-                src={
-                  this.state.user.fotoProfil == null
-                    ? Foto
-                    : API_URL + this.state.user.fotoProfil
-                }
-                alt=""
-                srcset=""
-              />
+    if (this.props.userGlobal.namaPengguna) {
+      return (
+        <div className="container-fluid container-profile">
+          <div className="container">
+            <div className="row profile p-3 bayangan">
+              <div className=" profile-home  col-md-2 col-sm-12 foto  rounded-circle">
+                <img
+                  src={
+                    this.state.user.fotoProfil == null
+                      ? Foto
+                      : API_URL + this.state.user.fotoProfil
+                  }
+                  alt=""
+                  srcset=""
+                />
+              </div>
+              <div className="col-md-10 col-sm-12">
+                <h1>{this.state.user.nama}</h1>
+                <p>{this.state.user.bio}</p>
+                <span>
+                  {this.props.userGlobal.id_user === this.state.user.id_user &&
+                  this.props.userGlobal.status === "verified" ? (
+                    <>
+                      <img
+                        onClick={() => this.editToggle(this.state.user)}
+                        src={Pengaturan}
+                        alt=""
+                        srcset=""
+                        style={{ width: "25px" }}
+                      />
+                    </>
+                  ) : null}
+                </span>
+              </div>
             </div>
-            <div className="col-md-10 col-sm-12">
-              <h1>{this.state.user.nama}</h1>
-              <p>{this.state.user.bio}</p>
-              <span>
-                {this.props.userGlobal.id_user === this.state.user.id_user &&
-                this.props.userGlobal.status === "verified" ? (
-                  <>
-                    <img
-                      onClick={() => this.editToggle(this.state.user)}
-                      src={Pengaturan}
-                      alt=""
-                      srcset=""
-                      style={{ width: "25px" }}
+            <div className="row justify-content-center pt-2 pb-5">
+              {this.renderPost()}
+            </div>
+          </div>
+          <Row>
+            <Modal
+              show={this.state.show}
+              onHide={() => this.setState({ show: !this.state.show })}
+              size="lg"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                  Ubah Profil
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  <FloatingLabel controlId="floatingTextarea" label="nama">
+                    <Form.Control
+                      as="textarea"
+                      onChange={this.inputHandler}
+                      placeholder="Leave a comment here"
+                      name="editNama"
+                      // value={this.state.editNama}
                     />
-                  </>
-                ) : null}
-              </span>
-            </div>
-          </div>
-          <div className="row justify-content-center pt-2 pb-5">
-            {this.renderPost()}
-          </div>
-        </div>
-        <Row>
-          <Modal
-            show={this.state.show}
-            onHide={() => this.setState({ show: !this.state.show })}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Ubah Profil
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                <FloatingLabel controlId="floatingTextarea" label="nama">
-                  <Form.Control
-                    as="textarea"
-                    onChange={this.inputHandler}
-                    placeholder="Leave a comment here"
-                    name="editNama"
-                    // value={this.state.editNama}
-                  />
-                </FloatingLabel>
-                <FloatingLabel
-                  controlId="floatingTextarea"
-                  label="nama Pengguna"
-                >
-                  <Form.Control
-                    as="textarea"
-                    onChange={this.inputHandler}
-                    placeholder="Leave a comment here"
-                    className="mt-3"
-                    name="editNamaPengguna"
-                    // value={this.state.editNamaPengguna}
-                  />
-                </FloatingLabel>
-                {/* <FloatingLabel
+                  </FloatingLabel>
+                  <FloatingLabel
+                    controlId="floatingTextarea"
+                    label="nama Pengguna"
+                  >
+                    <Form.Control
+                      as="textarea"
+                      onChange={this.inputHandler}
+                      placeholder="Leave a comment here"
+                      className="mt-3"
+                      name="editNamaPengguna"
+                      // value={this.state.editNamaPengguna}
+                    />
+                  </FloatingLabel>
+                  {/* <FloatingLabel
                   controlId="floatingTextarea2"
                   label="Foto Profil"
                 >
@@ -216,53 +218,56 @@ class Profile extends React.Component {
                     value={this.state.editFotoProfil}
                   />
                 </FloatingLabel> */}
-                <div className="border form-grup ">
-                  <img
-                    id="foto-upload"
-                    src=""
-                    alt=""
-                    widht="100%"
-                    height="300x"
-                  />
-                  <label htmlFor="img">image</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    name="image"
-                    // onChange={this.inputHandler}
-                    onChange={this.onBtnAddFile}
-                  />
+                  <div className="border form-grup ">
+                    <img
+                      id="foto-upload"
+                      src=""
+                      alt=""
+                      widht="100%"
+                      height="300x"
+                    />
+                    <label htmlFor="img">image</label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="image"
+                      // onChange={this.inputHandler}
+                      onChange={this.onBtnAddFile}
+                    />
+                  </div>
+                  <FloatingLabel controlId="floatingTextarea2" label="Bio">
+                    <Form.Control
+                      as="textarea"
+                      onChange={this.inputHandler}
+                      placeholder="Leave a comment here"
+                      style={{ height: "100px" }}
+                      className="mt-3"
+                      name="editBio"
+                      // value={this.state.editBio}
+                    />
+                  </FloatingLabel>
                 </div>
-                <FloatingLabel controlId="floatingTextarea2" label="Bio">
-                  <Form.Control
-                    as="textarea"
-                    onChange={this.inputHandler}
-                    placeholder="Leave a comment here"
-                    style={{ height: "100px" }}
-                    className="mt-3"
-                    name="editBio"
-                    // value={this.state.editBio}
-                  />
-                </FloatingLabel>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                onClick={() => this.setState({ show: !this.state.show })}
-                variant="secondary"
-              >
-                Batal
-              </Button>
-              <div onClick={() => this.setState({ show: !this.state.show })}>
-                <Button onClick={() => this.EditProfile()} variant="primary">
-                  Simpan
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  onClick={() => this.setState({ show: !this.state.show })}
+                  variant="secondary"
+                >
+                  Batal
                 </Button>
-              </div>
-            </Modal.Footer>
-          </Modal>
-        </Row>
-      </div>
-    );
+                <div onClick={() => this.setState({ show: !this.state.show })}>
+                  <Button onClick={() => this.EditProfile()} variant="primary">
+                    Simpan
+                  </Button>
+                </div>
+              </Modal.Footer>
+            </Modal>
+          </Row>
+        </div>
+      );
+    } else {
+      return <Redirect to="/" />;
+    }
   }
 }
 

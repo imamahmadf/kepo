@@ -9,8 +9,7 @@ import Axios from "axios";
 import Ubah from "../img/icon/ubah.png";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
-
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class Content extends Component {
   state = {
@@ -125,180 +124,186 @@ class Content extends Component {
   }
 
   render() {
-    return (
-      <div
-        className="container-fluid pt-5"
-        style={{ backgroundColor: "rgba(241, 241, 241, 1)" }}
-      >
-        <div className="container py-5">
-          <div className="row">
-            <div className="col-md-7 col-sm-12 mb-5">
-              <div className="bingkai bayangan">
-                <img
-                  className="foto-content"
-                  alt=""
-                  src={API_URL + this.state.postData.foto}
-                />
+    if (this.props.userGlobal.namaPengguna) {
+      return (
+        <div
+          className="container-fluid pt-5"
+          style={{ backgroundColor: "rgba(241, 241, 241, 1)" }}
+        >
+          <div className="container py-5">
+            <div className="row">
+              <div className="col-md-7 col-sm-12 mb-5">
+                <div className="bingkai bayangan">
+                  <img
+                    className="foto-content"
+                    alt=""
+                    src={API_URL + this.state.postData.foto}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-md-5 col-sm-12 ">
-              <div className="profile-content bayangan bingkai-profile">
-                <div className=" d-flex justify-content-between mx-3 my-1 border-bottom  border-1">
-                  <div className="d-flex">
-                    <div className="profile-navbar rounded-circle my-aut">
-                      <img
-                        src={
-                          this.state.postData.fotoProfil == null
-                            ? Foto
-                            : API_URL + this.state.postData.fotoProfil
-                        }
-                        alt=""
-                        srcset=""
-                      />
-                    </div>
-                    <div className="mx-2">
-                      <h6 className="username">
-                        {this.state.postData.namaPengguna}
-                      </h6>
-                      <h6 className="lokasi">{this.state.postData.lokasi}</h6>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="d-flex justify-content-end">
-                      {this.props.userGlobal.namaPengguna ===
-                      this.state.postData.namaPengguna ? (
+              <div className="col-md-5 col-sm-12 ">
+                <div className="profile-content bayangan bingkai-profile">
+                  <div className=" d-flex justify-content-between mx-3 my-1 border-bottom  border-1">
+                    <div className="d-flex">
+                      <div className="profile-navbar rounded-circle my-aut">
                         <img
-                          onClick={() => this.editToggle(this.state.postData)}
-                          src={Ubah}
+                          src={
+                            this.state.postData.fotoProfil == null
+                              ? Foto
+                              : API_URL + this.state.postData.fotoProfil
+                          }
                           alt=""
-                          height="18"
+                          srcset=""
                         />
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
-                <div className="d-flex justify-content-end tanggal mx-3 mb-1">
-                  <i class="fa-solid fa-calendar"></i>
-                  <p>{this.state.postData.tanggal}</p>
-                </div>
-                <div className="mx-3">
-                  <p>{this.state.postData.keterangan}</p>
-                </div>
-                {this.renderKomen()}
-                {this.props.userGlobal.status === "verified" ? (
-                  <div className="d-flex flex-row m-3">
-                    <div className="d-flex komentar">
-                      <input
-                        name="isiKomentar"
-                        type="text"
-                        placeholder="Komentar ..."
-                        onChange={this.inputHandler}
-                        value={this.state.isiKomentar}
-                      />
-                      <div className=" kirim-komentar">
-                        <i
-                          onClick={this.addKomen}
-                          class="fa-solid fa-paper-plane icon-kirim"
-                        ></i>
+                      </div>
+                      <div className="mx-2">
+                        <h6 className="username">
+                          {this.state.postData.namaPengguna}
+                        </h6>
+                        <h6 className="lokasi">{this.state.postData.lokasi}</h6>
                       </div>
                     </div>
-                    <img src={Like} alt="" className="icon" />
-                    <p>{this.state.suka}</p>
-                    <img src={Comment} alt="" className="icon" />
-                    <p>{this.state.postKomen.length}</p>
+                    <div>
+                      <div className="d-flex justify-content-end">
+                        {this.props.userGlobal.namaPengguna ===
+                        this.state.postData.namaPengguna ? (
+                          <img
+                            onClick={() => this.editToggle(this.state.postData)}
+                            src={Ubah}
+                            alt=""
+                            height="18"
+                          />
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
-                ) : null}
-                <Link to={`/profile/${this.state.postData.namaPengguna}`}>
-                  <div className="d-grid gap-2 mx-3 mb-3">
-                    <Button
-                      style={{
-                        backgroundColor: "rgba(89, 112, 157, 1)",
-                        borderColor: "rgba(89, 112, 157, 1)",
-                      }}
-                      size="lg"
-                    >
-                      Kepo
-                    </Button>{" "}
+                  <div className="d-flex justify-content-end tanggal mx-3 mb-1">
+                    <i class="fa-solid fa-calendar"></i>
+                    <p>{this.state.postData.tanggal}</p>
                   </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <Row>
-            <Modal
-              show={this.state.show}
-              onHide={() => this.setState({ show: !this.state.show })}
-              size="lg"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              backdrop="static"
-              keyboard={false}
-            >
-              <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                  Ubah Postingan
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div>
-                  <FloatingLabel
-                    controlId="floatingTextarea2"
-                    label="Keterangan"
-                  >
-                    <Form.Control
-                      as="textarea"
-                      onChange={this.inputHandler}
-                      placeholder="Leave a comment here"
-                      style={{ height: "100px" }}
-                      className="mb-3"
-                      name="editKeterangan"
-                      value={this.state.editKeterangan}
-                    />
-                  </FloatingLabel>
-                  <FloatingLabel controlId="floatingTextarea" label="Lokasi">
-                    <Form.Control
-                      as="textarea"
-                      onChange={this.inputHandler}
-                      placeholder="Leave a comment here"
-                      name="editLokasi"
-                      value={this.state.editLokasi}
-                    />
-                  </FloatingLabel>
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                <div onClick={() => this.setState({ show: !this.state.show })}>
-                  {" "}
-                  <Link to={`/profile/${this.props.userGlobal.namaPengguna}`}>
-                    <Button
-                      onClick={() => this.deleteBtnHandler()}
-                      variant="danger"
-                    >
-                      Hapus
-                    </Button>
+                  <div className="mx-3">
+                    <p>{this.state.postData.keterangan}</p>
+                  </div>
+                  {this.renderKomen()}
+                  {this.props.userGlobal.status === "verified" ? (
+                    <div className="d-flex flex-row m-3">
+                      <div className="d-flex komentar">
+                        <input
+                          name="isiKomentar"
+                          type="text"
+                          placeholder="Komentar ..."
+                          onChange={this.inputHandler}
+                          value={this.state.isiKomentar}
+                        />
+                        <div className=" kirim-komentar">
+                          <i
+                            onClick={this.addKomen}
+                            class="fa-solid fa-paper-plane icon-kirim"
+                          ></i>
+                        </div>
+                      </div>
+                      <img src={Like} alt="" className="icon" />
+                      <p>{this.state.suka}</p>
+                      <img src={Comment} alt="" className="icon" />
+                      <p>{this.state.postKomen.length}</p>
+                    </div>
+                  ) : null}
+                  <Link to={`/profile/${this.state.postData.namaPengguna}`}>
+                    <div className="d-grid gap-2 mx-3 mb-3">
+                      <Button
+                        style={{
+                          backgroundColor: "rgba(89, 112, 157, 1)",
+                          borderColor: "rgba(89, 112, 157, 1)",
+                        }}
+                        size="lg"
+                      >
+                        Kepo
+                      </Button>{" "}
+                    </div>
                   </Link>
                 </div>
-                <div>
-                  <Button
-                    className="mx-3"
+              </div>
+            </div>
+            <Row>
+              <Modal
+                show={this.state.show}
+                onHide={() => this.setState({ show: !this.state.show })}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                backdrop="static"
+                keyboard={false}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                    Ubah Postingan
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div>
+                    <FloatingLabel
+                      controlId="floatingTextarea2"
+                      label="Keterangan"
+                    >
+                      <Form.Control
+                        as="textarea"
+                        onChange={this.inputHandler}
+                        placeholder="Leave a comment here"
+                        style={{ height: "100px" }}
+                        className="mb-3"
+                        name="editKeterangan"
+                        value={this.state.editKeterangan}
+                      />
+                    </FloatingLabel>
+                    <FloatingLabel controlId="floatingTextarea" label="Lokasi">
+                      <Form.Control
+                        as="textarea"
+                        onChange={this.inputHandler}
+                        placeholder="Leave a comment here"
+                        name="editLokasi"
+                        value={this.state.editLokasi}
+                      />
+                    </FloatingLabel>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer>
+                  <div
                     onClick={() => this.setState({ show: !this.state.show })}
-                    variant="secondary"
                   >
-                    Batal
-                  </Button>
-                  <Button
-                    onClick={() => this.saveBtnHandler()}
-                    variant="primary"
-                  >
-                    Simpan
-                  </Button>
-                </div>
-              </Modal.Footer>
-            </Modal>
-          </Row>
+                    {" "}
+                    <Link to={`/profile/${this.props.userGlobal.namaPengguna}`}>
+                      <Button
+                        onClick={() => this.deleteBtnHandler()}
+                        variant="danger"
+                      >
+                        Hapus
+                      </Button>
+                    </Link>
+                  </div>
+                  <div>
+                    <Button
+                      className="mx-3"
+                      onClick={() => this.setState({ show: !this.state.show })}
+                      variant="secondary"
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      onClick={() => this.saveBtnHandler()}
+                      variant="primary"
+                    >
+                      Simpan
+                    </Button>
+                  </div>
+                </Modal.Footer>
+              </Modal>
+            </Row>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <Redirect to="/" />;
+    }
   }
 }
 

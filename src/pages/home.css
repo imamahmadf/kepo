@@ -7,6 +7,16 @@ p {
     width: 100%;
 }
 
+.home {
+    margin-top: 70px;
+}
+
+@media (max-width: 1199.98px) { 
+    .home {
+        margin-top: 5px;
+    }
+}
+
 .kotak-profil {
     border-color: none;
     background-color: white;
